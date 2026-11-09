@@ -1,10 +1,12 @@
 // Deploys contract/wasm/mira.wasm (built and sandbox-tested by CI) to testnet and initialises it.
-// Usage: node scripts/deploy.mjs [owner.testnet]
+// Usage: node scripts/deploy.mjs [owner.testnet] [--upgrade]
+//   --upgrade redeploys the code over an initialised contract. Storage (balances, quests) is kept.
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { CONTRACT, call, loadAccount, provider, view } from './lib.mjs'
 
-const owner = process.argv[2] ?? 'mira-treasury.testnet'
+const upgrade = process.argv.includes('--upgrade')
+const owner = process.argv.slice(2).find((a) => !a.startsWith('--')) ?? 'mira-treasury.testnet'
 const wasmPath = fileURLToPath(new URL('../contract/wasm/mira.wasm', import.meta.url))
 const wasm = readFileSync(wasmPath)
 const account = loadAccount(CONTRACT)
@@ -26,21 +28,23 @@ try {
 } catch {
   // not deployed or not initialised yet
 }
-if (initialised) {
-  console.log('already deployed and initialised, nothing to do')
+if (initialised && !upgrade) {
+  console.log('already deployed and initialised, nothing to do (pass --upgrade to redeploy the code)')
   process.exit(0)
 }
 
-console.log('deploying…')
+console.log(initialised ? 'upgrading code, state is kept…' : 'deploying…')
 await account.deployContract(wasm)
-console.log('initialising with owner', owner)
-await call(account, 'init', {
-  owner_id: owner,
-  faucet_on: true,
-  // Demo clocks: 15-minute epochs, and one gm unlocks proposing.
-  config: { epoch_s: 900, target_pulse: 10, min_phase_s: 20, propose_streak: 1 },
-})
+if (!initialised) {
+  console.log('initialising with owner', owner)
+  await call(account, 'init', {
+    owner_id: owner,
+    faucet_on: true,
+    // Demo clocks: 15-minute epochs, and one gm unlocks proposing.
+    config: { epoch_s: 900, target_pulse: 10, min_phase_s: 20, propose_streak: 1 },
+  })
+}
 
 const overview = await view('get_overview')
-console.log('live:', { total_supply: overview.total_supply, mood: overview.mood, epoch: overview.epoch })
+console.log('live:', { total_supply: overview.total_supply, mood: overview.mood, burned: overview.burned, quests: overview.quests_created })
 console.log(`contract ${CONTRACT} is live on testnet`)

@@ -2,13 +2,27 @@
 // Used to record the demo video against the live contract (every step is a real transaction).
 // Usage: node scripts/demo-quest.mjs
 import { createHash } from 'node:crypto'
-import { call, loadAccount, sleep, tokens, view } from './lib.mjs'
+import { call as rawCall, loadAccount, sleep, tokens, view } from './lib.mjs'
 
 const names = ['ana', 'bob', 'cy', 'dee', 'eve']
 const acc = Object.fromEntries(names.map((n) => [n, loadAccount(`mira-${n}.testnet`)]))
 const id = (n) => `mira-${n}.testnet`
 const sha256Hex = (text) => createHash('sha256').update(text).digest('hex')
 const say = (tag, text) => console.log(`${tag}|${text}`)
+
+// Public RPCs throttle bursts. Retry infrastructure errors; a repeated step that already landed is fine.
+async function call(account, method, args) {
+  for (let attempt = 0; ; attempt++) {
+    try {
+      return await rawCall(account, method, args)
+    } catch (e) {
+      if (/already (joined|voted|revealed)/.test(e.message)) return null
+      const infra = /Exceeded|429|fetch|timeout|ECONN|socket/i.test(e.message)
+      if (!infra || attempt >= 5) throw e
+      await sleep(1500 * (attempt + 1))
+    }
+  }
+}
 
 async function waitForPhase(questId, phase) {
   for (;;) {
@@ -28,7 +42,7 @@ const questId = await call(acc.ana, 'propose_quest', {
   description: 'Introduce a new builder to MIRA and help them finish their first quest.',
   stake: tokens(20).toString(),
   seed: tokens(60).toString(),
-  submit_s: 32, commit_s: 22, reveal_s: 22,
+  submit_s: 40, commit_s: 28, reveal_s: 28,
 })
 say('PROPOSED', `Quest #${questId}: mira-ana burns 50 MIRA to propose it and seeds the pool`)
 
@@ -41,13 +55,15 @@ say('ENTERED', 'Three players stake 20 MIRA each and post proof')
 await waitForPhase(questId, 'COMMIT')
 const salt = `demo-${questId}`
 const picks = { bob: 'dee', ana: 'dee' }
-await Promise.all(Object.entries(picks).map(([voter, pick]) =>
-  call(acc[voter], 'commit_vote', { id: questId, commit: sha256Hex(`${questId}:${id(voter)}:${id(pick)}:${salt}`) })))
+for (const [voter, pick] of Object.entries(picks)) {
+  await call(acc[voter], 'commit_vote', { id: questId, commit: sha256Hex(`${questId}:${id(voter)}:${id(pick)}:${salt}`) })
+}
 say('SEALED', 'Two holders stake to vote. Only hashes are on-chain, so nobody can copy the crowd')
 
 await waitForPhase(questId, 'REVEAL')
-await Promise.all(Object.entries(picks).map(([voter, pick]) =>
-  call(acc[voter], 'reveal_vote', { id: questId, entrant: id(pick), salt })))
+for (const [voter, pick] of Object.entries(picks)) {
+  await call(acc[voter], 'reveal_vote', { id: questId, entrant: id(pick), salt })
+}
 say('REVEALED', 'Votes are opened and checked against the hashes')
 
 await waitForPhase(questId, 'SETTLE')
