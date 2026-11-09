@@ -176,6 +176,17 @@ small { font-size: 0.6em; font-weight: 500; opacity: 0.7; margin-left: 4px; }
 .mini-list li:last-child { border-bottom: 0; }
 .mini-list b { font-variant-numeric: tabular-nums; }
 
+/* mood lab */
+.mood-picker { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.pick { --mood: var(--ink); display: inline-flex; align-items: center; gap: 7px; border: 1.5px solid var(--line); background: var(--card); border-radius: 99px; padding: 7px 14px; font-size: 0.86rem; font-weight: 600; transition: background .15s, border-color .15s; }
+.pick i { width: 9px; height: 9px; border-radius: 50%; background: var(--mood); }
+.pick:hover { border-color: var(--ink); }
+.pick.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+.preview-row { --mood: var(--steady); display: grid; grid-template-columns: 104px 1fr; gap: 16px; align-items: center; margin-bottom: 16px; padding: 14px; border-radius: 16px; background: color-mix(in srgb, var(--mood) 9%, var(--paper)); }
+.preview-row .mascot { width: 104px; }
+.preview-row strong { font-size: 1.05rem; }
+.preview-row p { margin-top: 2px; color: var(--muted); font-size: 0.9rem; }
+
 /* quests */
 .quest-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; align-items: start; }
 .quest { display: flex; flex-direction: column; gap: 14px; }

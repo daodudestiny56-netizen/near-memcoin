@@ -193,6 +193,7 @@ function QuestCard({ q }: { q: QuestDetail }) {
 }
 
 const PRESETS = [
+  { label: 'Blitz · 3 × 50 sec', s: 50 },
   { label: 'Lightning · 3 × 2 min', s: 120 },
   { label: 'Standard · 3 × 1 hour', s: 3600 },
   { label: 'Daily · 3 × 8 hours', s: 28800 },
@@ -204,6 +205,8 @@ function ProposeModal({ onClose }: { onClose: () => void }) {
   const [description, setDescription] = useState('')
   const [stake, setStake] = useState('10')
   const [seed, setSeed] = useState('0')
+  // Blitz needs a deployment whose minimum phase is short (the testnet demo allows 20 s).
+  const presets = PRESETS.filter((p) => p.s >= (config?.min_phase_s ?? 60))
   const [preset, setPreset] = useState(0)
   const need = config?.propose_streak ?? 3
   const streak = player?.streak ?? 0
@@ -229,7 +232,7 @@ function ProposeModal({ onClose }: { onClose: () => void }) {
         </div>
         <fieldset className="presets">
           <legend>Pace</legend>
-          {PRESETS.map((p, i) => (
+          {presets.map((p, i) => (
             <label key={p.s} className={preset === i ? 'choice on' : 'choice'}>
               <input type="radio" name="pace" checked={preset === i} onChange={() => setPreset(i)} />
               <span>{p.label}</span>
@@ -240,7 +243,7 @@ function ProposeModal({ onClose }: { onClose: () => void }) {
           className="btn btn-primary btn-block"
           disabled={!!busy || !valid}
           onClick={async () => {
-            const s = PRESETS[preset].s
+            const s = presets[preset].s
             const ok = await send('Propose quest', 'propose_quest', {
               title: title.trim(), description: description.trim(), stake: stakeRaw, seed: seedRaw,
               submit_s: s, commit_s: s, reveal_s: s,
