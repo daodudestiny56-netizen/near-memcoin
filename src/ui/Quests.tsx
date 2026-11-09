@@ -192,10 +192,12 @@ function QuestCard({ q }: { q: QuestDetail }) {
   )
 }
 
+// submit / commit / reveal window lengths in seconds
 const PRESETS = [
-  { label: 'Lightning · 3 × 2 min', s: 120 },
-  { label: 'Standard · 3 × 1 hour', s: 3600 },
-  { label: 'Daily · 3 × 8 hours', s: 28800 },
+  { label: 'Lightning · 3 × 2 min', submit: 120, commit: 120, reveal: 120 },
+  { label: 'Relaxed entry · 5 + 2.5 + 2.5 min', submit: 300, commit: 150, reveal: 150 },
+  { label: 'Standard · 3 × 1 hour', submit: 3600, commit: 3600, reveal: 3600 },
+  { label: 'Daily · 3 × 8 hours', submit: 28800, commit: 28800, reveal: 28800 },
 ]
 
 function ProposeModal({ onClose }: { onClose: () => void }) {
@@ -205,7 +207,7 @@ function ProposeModal({ onClose }: { onClose: () => void }) {
   const [stake, setStake] = useState('10')
   const [seed, setSeed] = useState('0')
   // Only offer paces the deployment allows (a contract's min_phase_s may exceed the shortest preset).
-  const presets = PRESETS.filter((p) => p.s >= (config?.min_phase_s ?? 60))
+  const presets = PRESETS.filter((p) => Math.min(p.submit, p.commit, p.reveal) >= (config?.min_phase_s ?? 60))
   const [preset, setPreset] = useState(0)
   const need = config?.propose_streak ?? 3
   const streak = player?.streak ?? 0
@@ -232,7 +234,7 @@ function ProposeModal({ onClose }: { onClose: () => void }) {
         <fieldset className="presets">
           <legend>Pace</legend>
           {presets.map((p, i) => (
-            <label key={p.s} className={preset === i ? 'choice on' : 'choice'}>
+            <label key={p.label} className={preset === i ? 'choice on' : 'choice'}>
               <input type="radio" name="pace" checked={preset === i} onChange={() => setPreset(i)} />
               <span>{p.label}</span>
             </label>
@@ -242,10 +244,10 @@ function ProposeModal({ onClose }: { onClose: () => void }) {
           className="btn btn-primary btn-block"
           disabled={!!busy || !valid}
           onClick={async () => {
-            const s = presets[preset].s
+            const pace = presets[preset]
             const ok = await send('Propose quest', 'propose_quest', {
               title: title.trim(), description: description.trim(), stake: stakeRaw, seed: seedRaw,
-              submit_s: s, commit_s: s, reveal_s: s,
+              submit_s: pace.submit, commit_s: pace.commit, reveal_s: pace.reveal,
             })
             if (ok) onClose()
           }}
