@@ -6,6 +6,17 @@ const ONE = 10n ** 18n
 const GAS = { gas: Gas.parse('300 Tgas') }
 const YOCTO = { ...GAS, attachedDeposit: '1' }
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+// Block time drives the phases, so wait on the chain's own view of the quest.
+async function waitForPhase(mira, id, phase, timeoutMs = 90_000) {
+  const start = Date.now()
+  for (;;) {
+    const quest = await mira.view('get_quest', { id })
+    if (quest.phase === phase) return
+    if (Date.now() - start > timeoutMs) throw new Error(`timed out waiting for ${phase}, stuck in ${quest.phase}`)
+    await sleep(500)
+  }
+}
 const sha256Hex = (text) => createHash('sha256').update(text).digest('hex')
 
 test.before(async (t) => {
@@ -70,7 +81,7 @@ test.serial('a full quest: propose, join, vote hidden, reveal, settle, burn', as
 
   const id = await ana.call(mira, 'propose_quest', {
     title: 'Touch grass', description: 'park photo', stake: (25n * ONE).toString(),
-    submit_s: 4, commit_s: 4, reveal_s: 4,
+    submit_s: 25, commit_s: 15, reveal_s: 15,
   }, GAS)
   t.is(id, 1)
   t.is(BigInt(await mira.view('ft_total_supply')), supplyBefore - 50n * ONE)
@@ -80,17 +91,17 @@ test.serial('a full quest: propose, join, vote hidden, reveal, settle, burn', as
     await p.call(mira, 'submit_proof', { id, proof: `proof from ${p.accountId}` }, GAS)
   }
 
-  await sleep(5000) // commit phase
+  await waitForPhase(mira, id, 'COMMIT')
   const salt = 'sandbox'
   for (const voter of [dee, eve]) {
     const commit = sha256Hex(`${id}:${voter.accountId}:${bob.accountId}:${salt}`)
     await voter.call(mira, 'commit_vote', { id, commit }, GAS)
   }
-  await sleep(4500) // reveal phase
+  await waitForPhase(mira, id, 'REVEAL')
   for (const voter of [dee, eve]) {
     await voter.call(mira, 'reveal_vote', { id, entrant: bob.accountId, salt }, GAS)
   }
-  await sleep(4500) // settle
+  await waitForPhase(mira, id, 'SETTLE')
   const result = await ana.call(mira, 'resolve_quest', { id }, GAS)
   t.deepEqual(result.winners, [bob.accountId])
   t.is(result.correct_voters, 2)
