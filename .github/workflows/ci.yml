@@ -46,11 +46,11 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         working-directory: .
         run: |
-          mkdir -p contract/dist
-          cp contract/build/mira.wasm contract/dist/mira.wasm
+          mkdir -p contract/wasm
+          cp contract/build/mira.wasm contract/wasm/mira.wasm
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add contract/dist/mira.wasm
+          git add contract/wasm/mira.wasm
           if git diff --cached --quiet; then
             echo "wasm unchanged"
           else
