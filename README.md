@@ -36,6 +36,7 @@
 12. [Known limitations](#12-known-limitations)
 13. [Roadmap](#13-roadmap)
 14. [Repository layout](#14-repository-layout)
+15. [Related project](#15-related-project)
 
 ---
 
@@ -422,3 +423,9 @@ Hackathon software, stated plainly:
 ├── .github/workflows/     CI
 └── README.md
 ```
+
+---
+
+## 15. Related project
+
+Disclosed per the hackathon rules (each README names the other): the author is also submitting **[NEAR Agent Census](https://github.com/daodudestiny56-netizen/near-thesis-)** in the **Investment Thesis** track. It is a re-runnable census that classifies NEAR activity as human-like or automated from on-chain behaviour and measures the automated share of transactions and fees over time. It is its own entry; MIRA is the Memecoins With Mechanics entry. The two share no code.
