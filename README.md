@@ -61,9 +61,9 @@ The README is written so it can be checked against the code.
 |---|---|
 | The contract is deployed on NEAR testnet at `mira-memecoin.testnet` | **Real.** Verifiable with the views in [section 11](#11-the-testnet-deployment). |
 | A full quest has been played on that contract | **Real.** Quest #1 ran propose → join → sealed votes → reveal → settle with five funded testnet accounts ([section 4](#4-a-real-quest-with-real-numbers)). |
-| 52 unit tests of the game rules pass | **Real.** `cd contract && npm test`, run in CI on every push. |
+| 53 unit tests of the game rules pass | **Real.** `cd contract && npm test`, run in CI on every push. |
 | The real wasm passes an integration test on a local NEAR chain | **Real.** 5 sandbox tests in CI ([section 8](#8-testing-and-ci)). |
-| The web app reads live data from the contract | **Real.** Plain JSON-RPC view calls, polled every 4 s. |
+| The web app reads live data from the contract | **Real.** One `get_dashboard` view call every 5 s over plain JSON-RPC, with exponential backoff if the RPC throttles. |
 | The web app can sign transactions with a wallet | **Implemented, not end-to-end exercised.** Signing goes through `@hot-labs/near-connect`. I drove the contract's calls from scripts with keypairs; I did not click through a wallet popup myself. |
 | The faucet (`claim`) | **Demo only.** It pays 1,000 test MIRA once per account from the owner's balance. Switch it off with `set_faucet`. |
 | Mainnet | **Not deployed.** The contract is unaudited ([section 12](#12-known-limitations)). |
@@ -160,7 +160,7 @@ The contract takes `starve_bps` (1%) of the balance. **80% moves into the next q
 
 ## 4. A real quest, with real numbers
 
-This is quest **#1** on `mira-memecoin.testnet`, played by `scripts/seed.mjs`. Read it back yourself with `get_quest {"id": 1}`.
+This is quest **#1** on `mira-memecoin.testnet`, played by `scripts/seed.mjs`. Read it back yourself with `get_quest {"id": 1}`. The testnet contract has since been played further (more quests, both burn-heavy THRIVING and burn-light STARVING settlements), so overall totals have grown; quest #1 stays fixed.
 
 | Step | What happened |
 |---|---|
@@ -235,14 +235,14 @@ All amounts are decimal strings in base units (18 decimals). Account IDs are str
 
 ### Views
 
-`get_overview` (supply, burned, rollover, treasury, circulating, mood, pulse, history, current splits) · `get_config` · `list_quests {from_id, limit}` (newest first) · `get_quest {id}` (entries and who has voted or revealed, never the choice) · `get_player {account_id}` · `get_leaderboard {limit}` · `recent_events {limit}`
+`get_overview` (supply, burned, rollover, treasury, circulating, mood, pulse, history, current splits) · `get_config` · `get_dashboard {account_id?, quest_limit?, event_limit?, board_limit?}` (everything the page shows in one call) · `list_quests {from_id, limit}` (newest first) · `get_quest {id}` (entries and who has voted or revealed, never the choice) · `get_player {account_id}` · `get_leaderboard {limit}` · `recent_events {limit}`
 
 ---
 
 ## 7. Architecture
 
 ```
-┌────────────────────────┐        JSON-RPC views (every 4 s)        ┌──────────────────────────┐
+┌────────────────────────┐        one get_dashboard view / 5 s          ┌──────────────────────────┐
 │  React + Vite web app  │ ───────────────────────────────────────▶ │  mira-memecoin.testnet   │
 │  (src/)                │                                          │  near-sdk-js wrapper     │
 │  @hot-labs/near-connect│ ── signed FunctionCall via wallet ─────▶ │  └─ src/core (game rules)│
@@ -274,7 +274,7 @@ All amounts are decimal strings in base units (18 decimals). Account IDs are str
 
 ## 8. Testing and CI
 
-**52 unit tests** (`cd contract && npm test`, Node's built-in runner) cover the rules:
+**53 unit tests** (`cd contract && npm test`, Node's built-in runner) cover the rules:
 
 * token: supply, overdrafts, burn accounting, `ft_transfer_call` refund math
 * heartbeat: thresholds, epoch rollover, silent-epoch starvation, view-without-write
@@ -289,8 +289,9 @@ All amounts are decimal strings in base units (18 decimals). Account IDs are str
 
 **Bugs the tests caught (and I fixed).** These are in the git history:
 
-* *Views read the caller.* NEAR forbids `predecessor_account_id` and `attached_deposit` inside view calls. Every view would have failed on-chain while all 52 unit tests passed. The sandbox test found it.
+* *Views read the caller.* NEAR forbids `predecessor_account_id` and `attached_deposit` inside view calls. Every view would have failed on-chain while every unit test passed. The sandbox test found it.
 * *Imports shadowing methods.* `near-sdk-js` hoists each method to a top-level function, so imports named `init`, `gm`, `claim` and `starve` produced "Duplicate declaration". CI's build step found it.
+* *A stale UI under rate limiting.* While filming the demo, the page was making ~13 RPC calls per refresh and the public RPC throttled it, so the screen lagged the chain. Fixed with the single `get_dashboard` view, polling backoff, and a sandbox assertion on that view. The deprecated `rpc.testnet.near.org` (it now answers 429 on purpose) was removed from the app and scripts at the same time.
 * *`list_quests` returned the oldest quests*, not the newest, once there were more than one page. A unit test now covers it.
 
 ---
@@ -305,7 +306,7 @@ React 19 + TypeScript + Vite, Bricolage Grotesque, no UI library.
 * **Rituals.** gm with a streak counter, scars, the faucet, and the starvation keeper.
 * **Live feed**, **leaderboard**, and an honest "how it works / limits" section.
 
-Data flow: `src/chain/rpc.ts` calls the contract's views over JSON-RPC (with RPC fallback); `src/state/mira.tsx` polls and holds state; transactions go through `src/chain/wallet.ts`. A `VITE_MOCK=1` fake chain exists for UI development only and is not bundled into production builds.
+Data flow: `src/chain/rpc.ts` calls the contract's views over JSON-RPC (two FastNEAR endpoints, tried in turn); `src/state/mira.tsx` polls `get_dashboard` once every 5 s (doubling the wait up to 8x after a throttled response) and holds state; transactions go through `src/chain/wallet.ts`. A `VITE_MOCK=1` fake chain exists for UI development only and is not bundled into production builds.
 
 ---
 
@@ -376,7 +377,8 @@ Hackathon software, stated plainly:
 * **Wallet signing is not end-to-end verified** in a browser by the author (see [section 2](#2-what-is-real-and-what-is-not)). Reads and all contract calls are verified.
 * **`ft_transfer_call` is tested against a failing receiver**, not a real DEX receiver.
 * **The starvation tax is a real cost to idle holders**, by design. Exempt DEX pools and treasuries with `set_exempt`.
-* **The leaderboard indexes the first 1,000 players** and sorts on read.
+* **The leaderboard indexes the first 1,000 players** and sorts on read, and `get_dashboard` includes it, so a very large player base would need an indexer or a capped top-N stored on write.
+* **Free public RPCs throttle.** The app backs off, but heavy traffic needs a dedicated RPC key (`VITE_NEAR_RPC`).
 * **Timing uses the block timestamp**, which is set by validators within a small tolerance.
 * **Local vote salts.** A sealed vote can only be revealed from the browser that sealed it unless the user saved the salt.
 
@@ -400,7 +402,7 @@ Hackathon software, stated plainly:
 ├── contract/
 │   ├── src/core/          game rules (plain ES modules, unit-tested)
 │   ├── src/contract.js    near-sdk-js wrapper: NEP-141 + game methods
-│   ├── test/              52 unit tests
+│   ├── test/              53 unit tests
 │   ├── sandbox/           5 integration tests against the real wasm
 │   └── wasm/mira.wasm     CI-built, sandbox-tested binary
 ├── src/                   React web app (chain/, state/, ui/)
