@@ -2,12 +2,12 @@ import { NearBindgen, near, call, view, initialize, NearPromise, encode, decode,
 import { Game } from './core/game.js'
 import { parseAmount, plain } from './core/codec.js'
 import { DECIMALS } from './core/constants.js'
-import { init, setConfig, setExempt, setFaucet } from './core/admin.js'
+import { init as coreInit, setConfig, setExempt, setFaucet } from './core/admin.js'
 import { balanceOf, resolveTransfer, transfer } from './core/token.js'
-import { claim, gm, leaderboard } from './core/players.js'
+import { claim as coreClaim, gm as coreGm, leaderboard } from './core/players.js'
 import { join, listQuests, propose, submitProof } from './core/quests.js'
 import { commitVote, resolve, revealVote } from './core/settle.js'
-import { starve } from './core/starve.js'
+import { starve as coreStarve } from './core/starve.js'
 import { config, overview, player, questDetail } from './core/views.js'
 
 const TGAS = 1_000_000_000_000n
@@ -46,7 +46,7 @@ export class MiraContract {
 
   @initialize({})
   init({ owner_id, faucet_on, config: cfg }) {
-    init(game(), { owner_id, faucet_on, config: cfg || {} })
+    coreInit(game(), { owner_id, faucet_on, config: cfg || {} })
     this.ready = true
   }
 
@@ -144,12 +144,12 @@ export class MiraContract {
 
   @call({})
   gm() {
-    return gm(game())
+    return coreGm(game())
   }
 
   @call({})
   claim() {
-    return claim(game()).toString()
+    return coreClaim(game()).toString()
   }
 
   @call({})
@@ -192,7 +192,7 @@ export class MiraContract {
 
   @call({})
   starve({ account_id }) {
-    return plain(starve(game(), account_id))
+    return plain(coreStarve(game(), account_id))
   }
 
   // ---- Owner (clocks and thresholds only; cannot mint, pause or touch escrow) ----
