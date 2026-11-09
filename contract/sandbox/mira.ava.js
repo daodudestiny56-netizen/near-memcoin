@@ -118,4 +118,12 @@ test.serial('a full quest: propose, join, vote hidden, reveal, settle, burn', as
   t.true(events.length > 0)
   const board = await mira.view('get_leaderboard', { limit: 3 })
   t.is(board[0].account, bob.accountId)
+
+  // the single call the web app polls
+  const dash = await mira.view('get_dashboard', { account_id: bob.accountId })
+  t.is(dash.quests.length, 1)
+  t.is(dash.quests[0].status, 'RESOLVED')
+  t.is(dash.player.account, bob.accountId)
+  t.is(dash.overview.quests_completed, 1)
+  t.true(dash.events.length > 0)
 })
