@@ -1,8 +1,8 @@
 import { DECIMALS } from './constants.js'
 import { heartbeat, splitsFor } from './heartbeat.js'
 import { balanceOf } from './token.js'
-import { getStats } from './players.js'
-import { entries, getQuest, phaseOf, summary, vKey } from './quests.js'
+import { getStats, leaderboard } from './players.js'
+import { entries, getQuest, listQuests, phaseOf, summary, vKey } from './quests.js'
 
 // Everything the dashboard needs in one read. Never writes, so it is safe in views.
 export function overview(g) {
@@ -58,4 +58,16 @@ export function player(g, account) {
 
 export function config(g) {
   return g.cfg()
+}
+
+// Everything the dashboard polls, in ONE call: public RPCs rate-limit, and 13 round
+// trips per refresh per visitor is how a demo ends up showing stale numbers.
+export function dashboard(g, { account = null, quest_limit = 8, event_limit = 30, board_limit = 10 } = {}) {
+  return {
+    overview: overview(g),
+    quests: listQuests(g, 1, quest_limit).map((q) => questDetail(g, q.id)),
+    events: g.recentEvents(event_limit),
+    board: leaderboard(g, board_limit),
+    player: account ? player(g, account) : null,
+  }
 }

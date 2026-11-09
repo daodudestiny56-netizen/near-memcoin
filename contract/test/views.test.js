@@ -5,7 +5,7 @@ import { claim, gm } from '../src/core/players.js'
 import { join, propose, submitProof } from '../src/core/quests.js'
 import { commitPreimage, commitVote, revealVote } from '../src/core/settle.js'
 import { TOTAL_SUPPLY } from '../src/core/constants.js'
-import { overview, player, questDetail } from '../src/core/views.js'
+import { dashboard, overview, player, questDetail } from '../src/core/views.js'
 import { plain } from '../src/core/codec.js'
 
 const DAY = 86_400
@@ -78,4 +78,23 @@ test('questDetail shows who has voted and who has revealed, but not the choice',
   assert.deepEqual(questDetail(c.as('x', t + 800), 1).votes, [{ account: 'ana.testnet', revealed: false }])
   revealVote(c.as('ana.testnet', t + 1300), 1, 'bob.testnet', 's')
   assert.deepEqual(questDetail(c.as('x', t + 1301), 1).votes, [{ account: 'ana.testnet', revealed: true }])
+})
+
+test('dashboard bundles overview, quests, events, leaderboard and the player in one read', () => {
+  const c = chain()
+  claim(c.as('ana.testnet', 5))
+  for (let d = 0; d < 3; d++) gm(c.as('ana.testnet', d * DAY + 10))
+  propose(c.as('ana.testnet', 3 * DAY + 100), {
+    title: 'Touch grass', description: '', stake: tokens(25), submit_s: 600, commit_s: 600, reveal_s: 600,
+  })
+  const before = c.store.get('hb')
+  const d = dashboard(c.as('x', 3 * DAY + 200), { account: 'ana.testnet' })
+  assert.equal(d.overview.quests_created, 1)
+  assert.equal(d.quests.length, 1)
+  assert.equal(d.quests[0].phase, 'SUBMIT')
+  assert.ok(d.events.length > 0)
+  assert.equal(d.board[0].account, 'ana.testnet')
+  assert.equal(d.player.account, 'ana.testnet')
+  assert.equal(dashboard(c.as('x', 3 * DAY + 200)).player, null)
+  assert.equal(c.store.get('hb'), before, 'a view must not write')
 })

@@ -8,7 +8,7 @@ import { claim as coreClaim, gm as coreGm, leaderboard } from './core/players.js
 import { join, listQuests, propose, submitProof } from './core/quests.js'
 import { commitVote, resolve, revealVote } from './core/settle.js'
 import { starve as coreStarve } from './core/starve.js'
-import { config, overview, player, questDetail } from './core/views.js'
+import { config, dashboard as coreDashboard, overview, player, questDetail } from './core/views.js'
 
 const TGAS = 1_000_000_000_000n
 const ICON =
@@ -227,6 +227,16 @@ export class MiraContract {
   @view({})
   get_overview() {
     return plain(overview(viewGame()))
+  }
+
+  @view({})
+  get_dashboard({ account_id, quest_limit, event_limit, board_limit }) {
+    return plain(coreDashboard(viewGame(), {
+      account: account_id || null,
+      quest_limit: Math.min(quest_limit || 8, 12),
+      event_limit: Math.min(event_limit || 30, 50),
+      board_limit: Math.min(board_limit || 10, 25),
+    }))
   }
 
   @view({})
