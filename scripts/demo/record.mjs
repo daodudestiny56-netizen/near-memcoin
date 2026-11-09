@@ -16,11 +16,15 @@ if (!OUT) throw new Error('usage: node scripts/demo/record.mjs <out-dir>')
 mkdirSync(OUT, { recursive: true })
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 const id = (n) => `mira-${n}.testnet`
-const QUEST = 'Teach one friend'
+const QUEST = 'Onboard one friend'
 
-// refuse to film a take that can't show the starvation tax
-const overview = await view('get_overview')
-if (overview.mood !== 'STARVING') throw new Error(`mood is ${overview.mood}; the keeper scene needs STARVING`)
+// TAKE=keeper (intro, moods, starvation tax, gm) needs a starving coin; TAKE=quest (default) is the quest flow
+const TAKE = process.env.TAKE ?? 'quest'
+if (!['keeper', 'quest'].includes(TAKE)) throw new Error('TAKE must be keeper or quest')
+if (TAKE === 'keeper') {
+  const overview = await view('get_overview')
+  if (overview.mood !== 'STARVING') throw new Error(`mood is ${overview.mood}; the keeper scene needs STARVING`)
+}
 
 const signers = {}
 const browser = await chromium.launch({ channel: 'chrome' })
@@ -89,14 +93,14 @@ await page.evaluate(() => {
 let cx = 640
 let cy = 380
 async function glide(x, y, ms = 400) {
-  const steps = Math.max(10, Math.round(ms / 16))
+  const steps = Math.max(8, Math.round(ms / 36))
   const sx = cx
   const sy = cy
   for (let i = 1; i <= steps; i++) {
     const t = i / steps
     const e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2
     await page.mouse.move(sx + (x - sx) * e, sy + (y - sy) * e)
-    await sleep(16)
+    await sleep(8)
   }
   cx = x
   cy = y
@@ -168,155 +172,176 @@ async function switchTo(name) {
 const card = () => page.locator('.quest', { has: page.locator('h3', { hasText: QUEST }) }).first()
 
 // ---------- the story ----------
-mark('title')
-await glide(900, 360, 300)
-await sleep(4300)
-await page.evaluate(() => { const c = document.getElementById('card'); c.style.opacity = 0; setTimeout(() => c.remove(), 700) })
-await sleep(900)
+async function keeperTake() {
+  mark('title')
+  await glide(900, 360, 300)
+  await sleep(4300)
+  await page.evaluate(() => { const c = document.getElementById('card'); c.style.opacity = 0; setTimeout(() => c.remove(), 700) })
+  await sleep(900)
 
-mark('hero')
-await chapter('1', 'Live on NEAR testnet')
-await sleep(7000)
+  mark('hero')
+  await chapter('1', 'Live on NEAR testnet')
+  await sleep(7000)
 
-mark('moods')
-await chapter('2', 'Four moods, four burn rates')
-await scrollToSection('#vitals', 1500)
-await page.evaluate(() => window.scrollBy({ top: 330, behavior: 'smooth' }))
-await sleep(1200)
-for (const m of ['Thriving', 'Steady', 'Hungry', 'Starving', 'Live']) {
-  await click(page.locator('.mood-picker .pick', { hasText: m }).first(), { scroll: false })
-  await sleep(m === 'Live' ? 800 : 1600)
-}
-
-mark('connect')
-await chapter('3', 'Connect a wallet')
-await scrollToSection('#top', 1200)
-await page.evaluate(() => { window.__miraDemo.pending = 'mira-ana.testnet' })
-await click(header('Connect wallet'), { scroll: false })
-await page.waitForFunction(() => document.querySelector('.wallet-info strong')?.textContent?.includes('ana'), null, { timeout: 15000 })
-await sleep(1600)
-
-mark('keeper')
-await chapter('4', 'MIRA is starving: feed it')
-await scrollToSection('#rituals', 1400)
-await sleep(2500)
-await typeInto(page.locator('.keeper input'), id('idle'))
-await sleep(600)
-await click(page.getByRole('button', { name: 'Feed MIRA' }))
-await waitTx()
-await sleep(1800)
-await scrollToSection('#feed', 1300)
-await sleep(2600)
-
-mark('gm')
-await chapter('5', 'Say gm, build a streak')
-await scrollToSection('#rituals', 1300)
-await click(page.getByRole('button', { name: 'Say gm' }))
-await waitTx()
-await sleep(2200)
-
-mark('propose')
-await chapter('6', 'Burn MIRA to propose a quest')
-await scrollToSection('#quests', 1300)
-await click(page.getByRole('button', { name: 'Propose a quest' }))
-await sleep(700)
-await typeInto(page.locator('.modal label', { hasText: 'Title' }).locator('input'), QUEST)
-await typeInto(page.locator('.modal textarea'), 'Show a friend how MIRA works.', 28)
-await typeInto(page.locator('.modal .two input').nth(0), '', 10)
-await page.keyboard.press('Control+A')
-await page.keyboard.type('20', { delay: 90 })
-await click(page.locator('.modal .two input').nth(1))
-await page.keyboard.press('Control+A')
-await page.keyboard.type('30', { delay: 90 })
-await sleep(500)
-await click(page.locator('.modal .choice', { hasText: 'Lightning' }))
-await sleep(700)
-await click(page.locator('.modal button.btn-primary'))
-await waitTx()
-await card().waitFor({ state: 'visible', timeout: 30000 })
-await sleep(1500)
-
-mark('enter')
-await chapter('7', 'Stake to enter, post proof')
-for (const [n, proof] of [['bob', 'https://x.com/bob/status/1'], ['cy', 'https://x.com/cy/status/2'], ['dee', 'https://x.com/dee/status/3']]) {
-  mark('enter_' + n)
-  await scrollToSection('#quests', 700)
-  await switchTo(n)
-  await click(card().getByRole('button', { name: /to enter/ }))
-  await waitTx()
-  await typeInto(card().locator('input'), proof, 28)
-  await click(card().getByRole('button', { name: /Submit proof/ }))
-  await waitTx()
-  await sleep(600)
-}
-
-mark('wait_vote')
-await chapter('8', 'Entries closed. Voting opens')
-await scrollToSection('#quests', 900)
-await waitChip(QUEST, 'Voting')
-await sleep(1200)
-
-mark('vote')
-await chapter('9', 'Vote in secret: only a hash goes on-chain')
-for (const n of ['eve', 'ana']) {
-  mark('vote_' + n)
-  await switchTo(n)
-  await click(card().locator('.choice', { hasText: 'dee' }))
-  await click(card().getByRole('button', { name: /seal vote/ }))
-  await waitTx()
-  await sleep(1300)
-}
-
-mark('wait_reveal')
-await chapter('10', 'Reveal: votes are opened and checked')
-await waitChip(QUEST, 'Revealing')
-await sleep(1000)
-
-mark('reveal')
-for (const n of ['eve', 'ana']) {
-  mark('reveal_' + n)
-  await switchTo(n)
-  await click(card().getByRole('button', { name: /Reveal my vote/ }))
-  await waitTx()
+  mark('moods')
+  await chapter('2', 'Four moods, four burn rates')
+  await scrollToSection('#vitals', 1500)
+  await page.evaluate(() => window.scrollBy({ top: 330, behavior: 'smooth' }))
   await sleep(1200)
+  for (const m of ['Thriving', 'Steady', 'Hungry', 'Starving', 'Live']) {
+    await click(page.locator('.mood-picker .pick', { hasText: m }).first(), { scroll: false })
+    await sleep(m === 'Live' ? 800 : 1600)
+  }
+
+  mark('connect')
+  await chapter('3', 'Connect a wallet')
+  await scrollToSection('#top', 1200)
+  await page.evaluate(() => { window.__miraDemo.pending = 'mira-ana.testnet' })
+  await click(header('Connect wallet'), { scroll: false })
+  await page.waitForFunction(() => document.querySelector('.wallet-info strong')?.textContent?.includes('ana'), null, { timeout: 15000 })
+  await sleep(1600)
+
+  mark('keeper')
+  await chapter('4', 'MIRA is starving: feed it')
+  await scrollToSection('#rituals', 1400)
+  await sleep(2500)
+  await typeInto(page.locator('.keeper input'), id('idle'))
+  await sleep(600)
+  await click(page.getByRole('button', { name: 'Feed MIRA' }))
+  await waitTx()
+  await sleep(1800)
+  await scrollToSection('#feed', 1300)
+  await sleep(2600)
+
+  mark('gm')
+  await chapter('5', 'Say gm, build a streak')
+  await scrollToSection('#rituals', 1300)
+  await click(page.getByRole('button', { name: 'Say gm' }))
+  await waitTx()
+  await sleep(2200)
+  mark('keeper_end')
 }
 
-mark('wait_settle')
-await chapter('11', 'Anyone can settle')
-await waitChip(QUEST, 'Settle')
-await sleep(800)
+async function questTake() {
+  mark('connect2')
+  await sleep(1500)
+  await chapter('6', 'Connect as a player')
+  await scrollToSection('#top', 900)
+  await page.evaluate(() => { window.__miraDemo.pending = 'mira-ana.testnet' })
+  await click(header('Connect wallet'), { scroll: false })
+  await page.waitForFunction(() => document.querySelector('.wallet-info strong')?.textContent?.includes('ana'), null, { timeout: 15000 })
+  await sleep(1200)
 
-mark('settle')
-await click(card().getByRole('button', { name: /Settle quest/ }))
-await waitTx()
-await sleep(3000)
+  mark('propose')
+  await chapter('7', 'Burn MIRA to propose a quest')
+  await scrollToSection('#quests', 1300)
+  await click(page.getByRole('button', { name: 'Propose a quest' }))
+  await sleep(700)
+  await typeInto(page.locator('.modal label', { hasText: 'Title' }).locator('input'), QUEST)
+  await typeInto(page.locator('.modal textarea'), 'Show a friend how MIRA works.', 28)
+  await click(page.locator('.modal .two input').nth(0))
+  await page.keyboard.press('Control+A')
+  await page.keyboard.type('20', { delay: 90 })
+  await click(page.locator('.modal .two input').nth(1))
+  await page.keyboard.press('Control+A')
+  await page.keyboard.type('30', { delay: 90 })
+  await sleep(500)
+  await click(page.locator('.modal .choice', { hasText: 'Relaxed entry' }))
+  await sleep(700)
+  await click(page.locator('.modal button.btn-primary'))
+  await waitTx()
+  await card().waitFor({ state: 'visible', timeout: 30000 })
+  await sleep(1500)
 
-mark('burn')
-await chapter('12', 'Failed stakes burn on-chain')
-await scrollToSection('#feed', 1300)
-await sleep(5500)
-await scrollToSection('#top', 1500)
-await sleep(3600)
+  mark('enter')
+  await chapter('8', 'Stake to enter, post proof')
+  for (const [n, proof] of [['bob', 'https://x.com/bob/status/1'], ['cy', 'https://x.com/cy/status/2'], ['dee', 'https://x.com/dee/status/3']]) {
+    mark('enter_' + n)
+    await scrollToSection('#quests', 700)
+    await switchTo(n)
+    await click(card().getByRole('button', { name: /to enter/ }))
+    await waitTx()
+    await typeInto(card().locator('input'), proof, 28)
+    await click(card().getByRole('button', { name: /Submit proof/ }))
+    await waitTx()
+    await sleep(600)
+  }
 
-mark('board')
-await chapter('13', 'Winners earn XP, losers earn scars')
-await scrollToSection('#leaderboard', 1400)
-await sleep(4500)
+  mark('wait_vote')
+  await chapter('9', 'Entries closed. Voting opens')
+  await scrollToSection('#quests', 900)
+  await waitChip(QUEST, 'Voting')
+  await sleep(1200)
 
-mark('rules')
-await chapter('14', 'No mint. No admin over funds')
-await scrollToSection('#rules', 1400)
-await page.evaluate(() => window.scrollBy({ top: 320, behavior: 'smooth' }))
-await sleep(7000)
+  mark('vote')
+  await chapter('10', 'Vote in secret: only a hash goes on-chain')
+  for (const n of ['eve', 'ana']) {
+    mark('vote_' + n)
+    await switchTo(n)
+    await click(card().locator('.choice', { hasText: 'dee' }))
+    await click(card().getByRole('button', { name: /seal vote/ }))
+    await waitTx()
+    await sleep(1300)
+  }
 
-mark('end')
-await chapter('', '')
-await page.evaluate(() => {
-  const c = document.createElement('div'); c.id = 'card'; c.style.opacity = 0
-  c.innerHTML = '<div><h1>MIRA <em>is alive.</em></h1><p>mira-memecoin.vercel.app</p><small>Contract: mira-memecoin.testnet<br/>github.com/daodudestiny56-netizen/near-memcoin<br/>Recorded with testnet accounts · #NEARHackathon</small></div>'
-  document.body.appendChild(c); requestAnimationFrame(() => { c.style.opacity = 1 })
-})
-await sleep(5200)
+  mark('wait_reveal')
+  await chapter('11', 'Reveal: votes are opened and checked')
+  await waitChip(QUEST, 'Revealing')
+  await sleep(1000)
+
+  mark('reveal')
+  for (const n of ['eve', 'ana']) {
+    mark('reveal_' + n)
+    await switchTo(n)
+    await click(card().getByRole('button', { name: /Reveal my vote/ }))
+    await waitTx()
+    await sleep(1200)
+  }
+
+  mark('wait_settle')
+  await chapter('12', 'Anyone can settle')
+  await waitChip(QUEST, 'Settle')
+  await sleep(800)
+
+  mark('settle')
+  await click(card().getByRole('button', { name: /Settle quest/ }))
+  await waitTx()
+  await sleep(3000)
+
+  mark('burn')
+  await chapter('13', 'Failed stakes burn on-chain')
+  await scrollToSection('#feed', 1300)
+  await sleep(5500)
+  await scrollToSection('#top', 1500)
+  await sleep(3600)
+
+  mark('board')
+  await chapter('14', 'Winners earn XP, losers earn scars')
+  await scrollToSection('#leaderboard', 1400)
+  await sleep(4500)
+
+  mark('rules')
+  await chapter('15', 'No mint. No admin over funds')
+  await scrollToSection('#rules', 1400)
+  await page.evaluate(() => window.scrollBy({ top: 320, behavior: 'smooth' }))
+  await sleep(7000)
+
+  mark('end')
+  await chapter('', '')
+  await page.evaluate(() => {
+    const c = document.createElement('div'); c.id = 'card'; c.style.opacity = 0
+    c.innerHTML = '<div><h1>MIRA <em>is alive.</em></h1><p>mira-memecoin.vercel.app</p><small>Contract: mira-memecoin.testnet<br/>github.com/daodudestiny56-netizen/near-memcoin<br/>Recorded with testnet accounts · #NEARHackathon</small></div>'
+    document.body.appendChild(c); requestAnimationFrame(() => { c.style.opacity = 1 })
+  })
+  await sleep(5200)
+}
+
+if (TAKE === 'keeper') await keeperTake()
+else {
+  // the quest take has no title card: remove it right away
+  await page.evaluate(() => document.getElementById('card')?.remove())
+  await questTake()
+}
 console.log('END', stamp().toFixed(2))
 const video = page.video()
 await context.close()
