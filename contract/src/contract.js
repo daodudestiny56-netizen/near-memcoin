@@ -102,7 +102,7 @@ export class MiraContract {
     let unused = null
     try {
       unused = near.promiseResult(0)
-    } catch (e) {
+    } catch {
       unused = null // receiver failed: refund everything
     }
     return resolveTransfer(game(), sender_id, receiver_id, parseAmount(amount), unused).toString()
@@ -134,14 +134,14 @@ export class MiraContract {
   // ---- NEP-145 (no-op: the contract pays storage, so accounts are free to register) ----
 
   @call({ payableFunction: true })
-  storage_deposit({ account_id }) {
+  storage_deposit() {
     const refund = near.attachedDeposit()
     if (refund > 0n) NearPromise.new(near.predecessorAccountId()).transfer(refund).build()
     return { total: '0', available: '0' }
   }
 
   @view({})
-  storage_balance_of({ account_id }) {
+  storage_balance_of() {
     return { total: '0', available: '0' }
   }
 
