@@ -73,6 +73,13 @@ const events = () => [
 export async function mockView(method: string, args: Record<string, unknown>): Promise<unknown> {
   await new Promise((r) => setTimeout(r, 60))
   switch (method) {
+    case 'get_dashboard': {
+      const [overview, list, evs, board, me] = await Promise.all([
+        mockView('get_overview', {}), mockView('list_quests', {}), mockView('recent_events', {}),
+        mockView('get_leaderboard', {}), args.account_id ? mockView('get_player', { account_id: args.account_id }) : null,
+      ])
+      return { overview, quests: (list as { id: number }[]).map((q) => quests.find((x) => x.id === q.id)), events: evs, board, player: me }
+    }
     case 'get_overview':
       return {
         total_supply: tok(10_000_000 - burned), burned: tok(burned), rollover: tok(212), treasury: tok(8_204_100),

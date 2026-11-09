@@ -73,7 +73,7 @@ export async function callMira(
   args: Record<string, unknown> = {},
   deposit = '0',
 ): Promise<void> {
-  if (USE_MOCK) return (await import('./mock')).mockCall(methodName, args)
+  if (import.meta.env.VITE_MOCK === '1') return (await import('./mock')).mockCall(methodName, args)
   const wallet = (await getConnector().wallet()) as unknown as ConnectedWallet
   await wallet.signAndSendTransaction({
     receiverId: CONTRACT_ID,

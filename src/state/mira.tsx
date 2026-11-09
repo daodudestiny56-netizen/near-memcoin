@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import { HAS_CHAIN, POLL_MS } from '../chain/config'
 import { view } from '../chain/rpc'
 import { callMira, connectWallet, disconnectWallet, onWalletChange, restoreAccount } from '../chain/wallet'
-import type { Config, FeedEvent, LeaderRow, Overview, Player, Quest, QuestDetail } from '../chain/types'
+import type { Config, Dashboard, FeedEvent, LeaderRow, Overview, Player, QuestDetail } from '../chain/types'
 
 export interface Toast {
   id: number
@@ -26,7 +26,7 @@ interface MiraState {
   connect: () => Promise<void>
   disconnect: () => Promise<void>
   send: (label: string, method: string, args?: Record<string, unknown>, deposit?: string) => Promise<boolean>
-  refresh: () => Promise<void>
+  refresh: () => Promise<boolean>
   dismiss: (id: number) => void
 }
 
@@ -54,7 +54,6 @@ export function MiraProvider({ children }: { children: ReactNode }) {
   const [busy, setBusy] = useState<string | null>(null)
   const [toasts, setToasts] = useState<Toast[]>([])
   const nextToast = useRef(1)
-  const settled = useRef(new Map<number, QuestDetail>())
   const accountRef = useRef<string | null>(null)
   useEffect(() => {
     accountRef.current = account
@@ -68,37 +67,29 @@ export function MiraProvider({ children }: { children: ReactNode }) {
 
   const dismiss = useCallback((id: number) => setToasts((list) => list.filter((t) => t.id !== id)), [])
 
-  const refresh = useCallback(async () => {
-    if (!HAS_CHAIN) return
+  // One RPC call per refresh. Returns false when the RPC pushed back (rate limit, outage).
+  const refresh = useCallback(async (): Promise<boolean> => {
+    if (!HAS_CHAIN) return true
     try {
       const who = accountRef.current
-      const [ov, list, evs, lb, me] = await Promise.all([
-        view<Overview>('get_overview'),
-        view<Quest[]>('list_quests', { from_id: 1, limit: 30 }),
-        view<FeedEvent[]>('recent_events', { limit: 30 }),
-        view<LeaderRow[]>('get_leaderboard', { limit: 10 }),
-        who ? view<Player>('get_player', { account_id: who }) : Promise.resolve(null),
-      ])
-      // Settled quests never change: fetch them once, then only poll the live ones.
-      const details = await Promise.all(
-        list.slice(0, DETAIL_LIMIT).map(async (q) => {
-          const cached = settled.current.get(q.id)
-          if (cached && q.status !== 'ACTIVE') return cached
-          const detail = await view<QuestDetail>('get_quest', { id: q.id })
-          if (detail.status !== 'ACTIVE') settled.current.set(q.id, detail)
-          return detail
-        }),
-      )
-      setOverview(ov)
-      setQuests(details)
-      setEvents(evs)
-      setBoard(lb)
-      setPlayer(me)
+      const d = await view<Dashboard>('get_dashboard', {
+        account_id: who ?? undefined,
+        quest_limit: DETAIL_LIMIT,
+        event_limit: 30,
+        board_limit: 10,
+      })
+      setOverview(d.overview)
+      setQuests(d.quests)
+      setEvents(d.events)
+      setBoard(d.board)
+      setPlayer(d.player)
       setStatus('live')
       setError('')
+      return true
     } catch (e) {
       setStatus((s) => (s === 'live' ? s : 'offline'))
       setError(e instanceof Error ? e.message : String(e))
+      return false
     }
   }, [])
 
@@ -117,12 +108,19 @@ export function MiraProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
+  // Poll every POLL_MS; double the wait (up to 8x) after each failure so a throttled RPC recovers.
   useEffect(() => {
-    void refresh()
-    const timer = window.setInterval(() => {
-      if (!document.hidden) void refresh()
-    }, POLL_MS)
-    return () => window.clearInterval(timer)
+    let stopped = false
+    const backoff = { failures: 0, timer: 0 }
+    const tick = async () => {
+      if (!document.hidden) backoff.failures = (await refresh()) ? 0 : Math.min(backoff.failures + 1, 3)
+      if (!stopped) backoff.timer = window.setTimeout(() => void tick(), POLL_MS * 2 ** backoff.failures)
+    }
+    void tick()
+    return () => {
+      stopped = true
+      window.clearTimeout(backoff.timer)
+    }
   }, [refresh, account])
 
   const connect = useCallback(async () => {
@@ -150,7 +148,7 @@ export function MiraProvider({ children }: { children: ReactNode }) {
       try {
         await callMira(method, args, deposit)
         toast('ok', `${label} — confirmed`)
-        await refresh()
+        void refresh()
         return true
       } catch (e) {
         const message = e instanceof Error ? e.message : String(e)

@@ -109,3 +109,12 @@ export interface FeedEvent {
   k: string
   d: Record<string, unknown>
 }
+
+// One bundled read of everything the page shows (contract view `get_dashboard`).
+export interface Dashboard {
+  overview: Overview
+  quests: QuestDetail[]
+  events: FeedEvent[]
+  board: LeaderRow[]
+  player: Player | null
+}

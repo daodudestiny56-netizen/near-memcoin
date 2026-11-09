@@ -1,4 +1,4 @@
-import { CONTRACT_ID, RPC_URLS, USE_MOCK } from './config'
+import { CONTRACT_ID, RPC_URLS } from './config'
 
 function toBase64(text: string): string {
   const bytes = new TextEncoder().encode(text)
@@ -9,7 +9,8 @@ function toBase64(text: string): string {
 
 // Read-only contract call over JSON-RPC. Tries each RPC in turn.
 export async function view<T>(method: string, args: Record<string, unknown> = {}): Promise<T> {
-  if (USE_MOCK) return (await (await import('./mock')).mockView(method, args)) as T
+  // literal env check so production builds drop the mock entirely
+  if (import.meta.env.VITE_MOCK === '1') return (await (await import('./mock')).mockView(method, args)) as T
   if (!CONTRACT_ID) throw new Error('No contract configured')
   let lastError: unknown = new Error('No RPC available')
   for (const url of RPC_URLS) {
