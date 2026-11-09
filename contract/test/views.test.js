@@ -1,8 +1,9 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { chain, tokens } from './helpers.js'
+import { chain, sha256Hex, tokens } from './helpers.js'
 import { claim, gm } from '../src/core/players.js'
-import { propose } from '../src/core/quests.js'
+import { join, propose, submitProof } from '../src/core/quests.js'
+import { commitPreimage, commitVote, revealVote } from '../src/core/settle.js'
 import { TOTAL_SUPPLY } from '../src/core/constants.js'
 import { overview, player, questDetail } from '../src/core/views.js'
 import { plain } from '../src/core/codec.js'
@@ -56,4 +57,25 @@ test('questDetail exposes the phase and entries', () => {
   const q = questDetail(c.as('x', 3 * DAY + 200), 1)
   assert.equal(q.phase, 'SUBMIT')
   assert.deepEqual(q.entries, [])
+  assert.deepEqual(q.votes, [])
+})
+
+test('questDetail shows who has voted and who has revealed, but not the choice', () => {
+  const c = chain()
+  const everyone = ['ana.testnet', 'bob.testnet', 'cy.testnet']
+  for (const who of everyone) claim(c.as(who, 5))
+  for (let d = 0; d < 3; d++) for (const who of everyone) gm(c.as(who, d * DAY + 10))
+  const t = 3 * DAY + 100
+  propose(c.as('ana.testnet', t), {
+    title: 'Touch grass', description: '', stake: tokens(25), submit_s: 600, commit_s: 600, reveal_s: 600,
+  })
+  for (const who of ['bob.testnet', 'cy.testnet']) {
+    join(c.as(who, t + 1), 1)
+    submitProof(c.as(who, t + 2), 1, 'p')
+  }
+  const commit = sha256Hex(commitPreimage(1, 'ana.testnet', 'bob.testnet', 's'))
+  commitVote(c.as('ana.testnet', t + 700), 1, commit)
+  assert.deepEqual(questDetail(c.as('x', t + 800), 1).votes, [{ account: 'ana.testnet', revealed: false }])
+  revealVote(c.as('ana.testnet', t + 1300), 1, 'bob.testnet', 's')
+  assert.deepEqual(questDetail(c.as('x', t + 1301), 1).votes, [{ account: 'ana.testnet', revealed: true }])
 })

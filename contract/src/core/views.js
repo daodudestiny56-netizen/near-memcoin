@@ -2,7 +2,7 @@ import { DECIMALS } from './constants.js'
 import { heartbeat, splitsFor } from './heartbeat.js'
 import { balanceOf } from './token.js'
 import { getStats } from './players.js'
-import { entries, getQuest, phaseOf, summary } from './quests.js'
+import { entries, getQuest, phaseOf, summary, vKey } from './quests.js'
 
 // Everything the dashboard needs in one read. Never writes, so it is safe in views.
 export function overview(g) {
@@ -33,7 +33,11 @@ export function overview(g) {
 
 export function questDetail(g, id) {
   const quest = getQuest(g, id)
-  return { ...summary(g, quest), phase: phaseOf(quest, g.ctx.now), entries: entries(g, id) }
+  const votes = quest.voters.map((account) => {
+    const vote = g.read(vKey(id, account))
+    return { account, revealed: vote.entrant !== null }
+  })
+  return { ...summary(g, quest), phase: phaseOf(quest, g.ctx.now), entries: entries(g, id), votes }
 }
 
 export function player(g, account) {
