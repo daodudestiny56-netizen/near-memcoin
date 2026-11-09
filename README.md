@@ -345,7 +345,7 @@ Deployed with `scripts/deploy.mjs` from the CI-tested wasm (566 KB). Initialised
 Verify it yourself without any tooling (replace the method and args as needed):
 
 ```bash
-curl -s https://rpc.testnet.near.org -H 'content-type: application/json' -d '{
+curl -s https://rpc.testnet.fastnear.com -H 'content-type: application/json' -d '{
   "jsonrpc":"2.0","id":1,"method":"query","params":{
     "request_type":"call_function","finality":"final",
     "account_id":"mira-memecoin.testnet","method_name":"get_overview",
