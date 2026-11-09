@@ -11,6 +11,7 @@
 
 | | |
 |---|---|
+| **Live app** | [mira-memecoin.vercel.app](https://mira-memecoin.vercel.app) (reads the testnet contract live) |
 | **Contract (testnet)** | [`mira-memecoin.testnet`](https://testnet.nearblocks.io/address/mira-memecoin.testnet) |
 | **Owner / treasury** | [`mira-treasury.testnet`](https://testnet.nearblocks.io/address/mira-treasury.testnet) |
 | **Token** | NEP-141, symbol `MIRA`, 18 decimals, 10,000,000 minted once, never again |
