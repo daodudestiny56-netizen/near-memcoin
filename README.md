@@ -301,7 +301,7 @@ All amounts are decimal strings in base units (18 decimals). Account IDs are str
 React 19 + TypeScript + Vite, Bricolage Grotesque, no UI library.
 
 * **Hero.** A mascot whose *face is the contract's mood*: its expression changes, and it breathes faster as the pulse approaches the target. Live supply, burned, circulating, rollover pool and a countdown to the next heartbeat.
-* **Vitals.** A heartbeat chart of pulse per epoch against the target, and a bar showing exactly where a failed stake goes under the current mood.
+* **Vitals.** A heartbeat chart of pulse per epoch against the target, and a bar showing exactly where a failed stake goes under the current mood. A **mood picker** previews all four moods (mascot face, effect, burn / rollover / voter split) without touching the chain; it is labelled as a preview.
 * **Quests.** Cards with a four-step timeline and a per-phase action: enter, proof, sealed vote (the salt stays in this browser's local storage), reveal, settle. A burn-to-propose dialog.
 * **Rituals.** gm with a streak counter, scars, the faucet, and the starvation keeper.
 * **Live feed**, **leaderboard**, and an honest "how it works / limits" section.
@@ -328,6 +328,17 @@ cd contract && npm install --ignore-scripts && npm test
 
 ```bash
 cd contract && npm install && npm run build && npm run test:sandbox
+```
+
+### Recording the demo (and why there is a test signer)
+
+A headless browser cannot operate a wallet popup, so the demo is filmed with a **recording-only signer**:
+`VITE_DEMO_SIGNER=1` makes the page hand each transaction to a harness (`scripts/demo/record.mjs`) that signs it in Node with throwaway testnet keys. The harness drives the *real* UI (visible cursor, real clicks and typing), and every action is a real testnet transaction. The checks are literal `import.meta.env` comparisons, so normal and production builds contain none of this code (the live bundle was checked for it).
+
+```bash
+VITE_DEMO_SIGNER=1 npx vite build --outDir dist-demo
+npx vite preview --outDir dist-demo --port 5200 &
+cd scripts/demo && npm install && node record.mjs out/   # needs the demo accounts' keys in ~/.near-credentials
 ```
 
 Environment variables (`.env`): `VITE_MIRA_CONTRACT` (contract account), `VITE_NEAR_NETWORK` (`testnet` | `mainnet`), `VITE_NEAR_RPC` (comma-separated RPC URLs), `VITE_MOCK=1` (UI development only).
@@ -406,7 +417,8 @@ Hackathon software, stated plainly:
 │   ├── sandbox/           5 integration tests against the real wasm
 │   └── wasm/mira.wasm     CI-built, sandbox-tested binary
 ├── src/                   React web app (chain/, state/, ui/)
-├── scripts/               account creation, deploy, seed
+├── scripts/               account creation, deploy, seed, demo-quest
+│   └── demo/              Playwright recorder for the walkthrough video
 ├── .github/workflows/     CI
 └── README.md
 ```
