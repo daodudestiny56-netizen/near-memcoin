@@ -193,7 +193,6 @@ function QuestCard({ q }: { q: QuestDetail }) {
 }
 
 const PRESETS = [
-  { label: 'Blitz · 3 × 75 sec', s: 75 },
   { label: 'Lightning · 3 × 2 min', s: 120 },
   { label: 'Standard · 3 × 1 hour', s: 3600 },
   { label: 'Daily · 3 × 8 hours', s: 28800 },
@@ -205,7 +204,7 @@ function ProposeModal({ onClose }: { onClose: () => void }) {
   const [description, setDescription] = useState('')
   const [stake, setStake] = useState('10')
   const [seed, setSeed] = useState('0')
-  // Blitz needs a deployment whose minimum phase is short (the testnet demo allows 20 s).
+  // Only offer paces the deployment allows (a contract's min_phase_s may exceed the shortest preset).
   const presets = PRESETS.filter((p) => p.s >= (config?.min_phase_s ?? 60))
   const [preset, setPreset] = useState(0)
   const need = config?.propose_streak ?? 3
