@@ -1,0 +1,9 @@
+{
+  "name": "mira-demo-recorder",
+  "private": true,
+  "type": "module",
+  "description": "Films the MIRA walkthrough against the live testnet contract (dev tooling only)",
+  "dependencies": {
+    "playwright-core": "^1.50.0"
+  }
+}
