@@ -19,7 +19,13 @@ jobs:
       - name: Unit tests (game rules)
         run: npm test
       - name: Build wasm
-        run: npm run build
+        run: |
+          npm run build > build.log 2>&1 || {
+            # surface the failure as a public annotation (job logs need a login)
+            echo "::error title=wasm build failed::$(grep -v 'no-unused-vars' build.log | head -c 1800 | sed ':a;N;$!ba;s/\n/%0A/g')"
+            exit 1
+          }
+          tail -n 5 build.log
       - name: Report wasm size
         run: ls -l build/mira.wasm
       - uses: actions/upload-artifact@v4
