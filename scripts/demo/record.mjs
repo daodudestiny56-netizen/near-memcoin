@@ -88,7 +88,7 @@ await page.evaluate(() => {
 // ---------- helpers: a visible cursor, real clicks, real typing ----------
 let cx = 640
 let cy = 380
-async function glide(x, y, ms = 520) {
+async function glide(x, y, ms = 400) {
   const steps = Math.max(10, Math.round(ms / 16))
   const sx = cx
   const sy = cy
@@ -102,22 +102,24 @@ async function glide(x, y, ms = 520) {
   cy = y
 }
 async function center(loc, scroll = true) {
-  if (scroll) {
+  let box = await loc.boundingBox()
+  // only scroll when the element is outside the comfortable viewport band (header/chapter chip excluded)
+  if (scroll && (!box || box.y < 110 || box.y + box.height > 640)) {
     await loc.evaluate((el) => el.scrollIntoView({ block: 'center', behavior: 'smooth' }))
-    await sleep(850)
+    await sleep(700)
+    box = await loc.boundingBox()
   }
-  const box = await loc.boundingBox()
   if (!box) throw new Error('element not visible: ' + loc)
   return box
 }
 async function click(loc, { scroll = true, fx = 0.5 } = {}) {
   const box = await center(loc, scroll)
   await glide(box.x + box.width * fx, box.y + box.height / 2)
-  await sleep(200)
+  await sleep(140)
   await page.mouse.down()
-  await sleep(70)
+  await sleep(60)
   await page.mouse.up()
-  await sleep(250)
+  await sleep(200)
 }
 async function typeInto(loc, text, delay = 55) {
   await click(loc)
@@ -183,7 +185,7 @@ await page.evaluate(() => window.scrollBy({ top: 330, behavior: 'smooth' }))
 await sleep(1200)
 for (const m of ['Thriving', 'Steady', 'Hungry', 'Starving', 'Live']) {
   await click(page.locator('.mood-picker .pick', { hasText: m }).first(), { scroll: false })
-  await sleep(m === 'Live' ? 900 : 1900)
+  await sleep(m === 'Live' ? 800 : 1600)
 }
 
 mark('connect')
@@ -219,7 +221,7 @@ await scrollToSection('#quests', 1300)
 await click(page.getByRole('button', { name: 'Propose a quest' }))
 await sleep(700)
 await typeInto(page.locator('.modal label', { hasText: 'Title' }).locator('input'), QUEST)
-await typeInto(page.locator('.modal textarea'), 'Show a friend how MIRA works and post proof.', 35)
+await typeInto(page.locator('.modal textarea'), 'Show a friend how MIRA works.', 28)
 await typeInto(page.locator('.modal .two input').nth(0), '', 10)
 await page.keyboard.press('Control+A')
 await page.keyboard.type('20', { delay: 90 })
@@ -227,7 +229,7 @@ await click(page.locator('.modal .two input').nth(1))
 await page.keyboard.press('Control+A')
 await page.keyboard.type('30', { delay: 90 })
 await sleep(500)
-await click(page.locator('.modal .choice', { hasText: 'Blitz' }))
+await click(page.locator('.modal .choice', { hasText: 'Lightning' }))
 await sleep(700)
 await click(page.locator('.modal button.btn-primary'))
 await waitTx()
@@ -237,7 +239,8 @@ await sleep(1500)
 mark('enter')
 await chapter('7', 'Stake to enter, post proof')
 for (const [n, proof] of [['bob', 'https://x.com/bob/status/1'], ['cy', 'https://x.com/cy/status/2'], ['dee', 'https://x.com/dee/status/3']]) {
-  await scrollToSection('#quests', 900)
+  mark('enter_' + n)
+  await scrollToSection('#quests', 700)
   await switchTo(n)
   await click(card().getByRole('button', { name: /to enter/ }))
   await waitTx()
@@ -256,6 +259,7 @@ await sleep(1200)
 mark('vote')
 await chapter('9', 'Vote in secret: only a hash goes on-chain')
 for (const n of ['eve', 'ana']) {
+  mark('vote_' + n)
   await switchTo(n)
   await click(card().locator('.choice', { hasText: 'dee' }))
   await click(card().getByRole('button', { name: /seal vote/ }))
@@ -270,6 +274,7 @@ await sleep(1000)
 
 mark('reveal')
 for (const n of ['eve', 'ana']) {
+  mark('reveal_' + n)
   await switchTo(n)
   await click(card().getByRole('button', { name: /Reveal my vote/ }))
   await waitTx()
