@@ -1,0 +1,22 @@
+{
+  "name": "mira-contract",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "MIRA: a NEP-141 memecoin whose supply reacts to community quests",
+  "scripts": {
+    "test": "node --test test/",
+    "build": "near-sdk-js build src/contract.js build/mira.wasm",
+    "test:sandbox": "ava --timeout=5m sandbox/*.ava.js"
+  },
+  "dependencies": {
+    "near-sdk-js": "2.0.0"
+  },
+  "devDependencies": {
+    "ava": "^6.1.3",
+    "near-workspaces": "^4.0.0"
+  },
+  "ava": {
+    "files": ["sandbox/*.ava.js"]
+  }
+}
