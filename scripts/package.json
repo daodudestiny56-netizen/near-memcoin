@@ -1,0 +1,9 @@
+{
+  "name": "mira-scripts",
+  "private": true,
+  "type": "module",
+  "description": "Deploy and demo tooling for the MIRA testnet contract",
+  "dependencies": {
+    "near-api-js": "^7.0.0"
+  }
+}
