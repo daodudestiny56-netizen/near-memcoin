@@ -16,7 +16,7 @@ if (!OUT) throw new Error('usage: node scripts/demo/record.mjs <out-dir>')
 mkdirSync(OUT, { recursive: true })
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 const id = (n) => `mira-${n}.testnet`
-const QUEST = 'Onboard one friend'
+const QUEST = 'Teach a friend'
 
 // TAKE=keeper (intro, moods, starvation tax, gm) needs a starving coin; TAKE=quest (default) is the quest flow
 const TAKE = process.env.TAKE ?? 'quest'
@@ -158,7 +158,7 @@ async function waitChip(title, text) {
   await page.waitForFunction(([t, want]) => {
     const card = [...document.querySelectorAll('.quest')].find((c) => c.querySelector('h3')?.textContent === t)
     return card?.querySelector('.chip-plain')?.textContent === want
-  }, [title, text], { timeout: 180000, polling: 500 })
+  }, [title, text], { timeout: 480000, polling: 500 })
   fast(a, stamp(), 8)
 }
 const header = (text) => page.locator('header.topbar button', { hasText: text })
