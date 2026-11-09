@@ -38,6 +38,16 @@ function game() {
   })
 }
 
+// NEAR forbids predecessor_account_id and attached_deposit inside view calls.
+function viewGame() {
+  return new Game(store, deps, {
+    caller: '',
+    now: near.blockTimestamp(),
+    self: near.currentAccountId(),
+    deposit: 0n,
+  })
+}
+
 const oneYocto = () => assert(near.attachedDeposit() === 1n, 'Requires attached deposit of exactly 1 yoctoNEAR')
 
 @NearBindgen({ requireInit: true })
@@ -100,12 +110,12 @@ export class MiraContract {
 
   @view({})
   ft_total_supply() {
-    return game().meta().total_supply.toString()
+    return viewGame().meta().total_supply.toString()
   }
 
   @view({})
   ft_balance_of({ account_id }) {
-    return balanceOf(game(), account_id).toString()
+    return balanceOf(viewGame(), account_id).toString()
   }
 
   @view({})
@@ -216,36 +226,36 @@ export class MiraContract {
 
   @view({})
   get_overview() {
-    return plain(overview(game()))
+    return plain(overview(viewGame()))
   }
 
   @view({})
   get_config() {
-    return plain(config(game()))
+    return plain(config(viewGame()))
   }
 
   @view({})
   list_quests({ from_id, limit }) {
-    return plain(listQuests(game(), from_id || 1, Math.min(limit || 20, 50)))
+    return plain(listQuests(viewGame(), from_id || 1, Math.min(limit || 20, 50)))
   }
 
   @view({})
   get_quest({ id }) {
-    return plain(questDetail(game(), id))
+    return plain(questDetail(viewGame(), id))
   }
 
   @view({})
   get_player({ account_id }) {
-    return plain(player(game(), account_id))
+    return plain(player(viewGame(), account_id))
   }
 
   @view({})
   get_leaderboard({ limit }) {
-    return plain(leaderboard(game(), limit || 10))
+    return plain(leaderboard(viewGame(), limit || 10))
   }
 
   @view({})
   recent_events({ limit }) {
-    return plain(game().recentEvents(limit || 20))
+    return plain(viewGame().recentEvents(limit || 20))
   }
 }
