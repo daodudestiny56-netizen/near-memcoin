@@ -96,7 +96,7 @@ export function submitProof(g, id, proof) {
 export function listQuests(g, from = 1, limit = 20) {
   const next = g.meta().next_quest
   const out = []
-  for (let id = Math.min(next - 1, from + limit - 1); id >= from && out.length < limit; id--) {
+  for (let id = next - 1; id >= from && out.length < limit; id--) {
     const q = g.read(qKey(id))
     if (q) out.push(summary(g, q))
   }

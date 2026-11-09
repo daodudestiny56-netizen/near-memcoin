@@ -99,3 +99,10 @@ test('listQuests returns newest first', () => {
   propose(c.as('ana.testnet', t + 1), { ...SPEC, title: 'Second' })
   assert.deepEqual(listQuests(c.as('x', t + 2)).map((q) => q.title), ['Second', 'Touch grass'])
 })
+
+test('listQuests returns the newest quests, not the oldest, past the page size', () => {
+  const c = chain()
+  const t = ready(c)
+  for (let i = 0; i < 4; i++) propose(c.as('ana.testnet', t + i), { ...SPEC, title: `Quest ${i + 1}` })
+  assert.deepEqual(listQuests(c.as('x', t + 10), 1, 2).map((q) => q.title), ['Quest 4', 'Quest 3'])
+})
