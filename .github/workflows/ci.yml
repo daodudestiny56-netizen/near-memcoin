@@ -28,6 +28,13 @@ jobs:
           tail -n 5 build.log
       - name: Report wasm size
         run: ls -l build/mira.wasm
+      - name: Sandbox integration tests (real wasm on a local NEAR chain)
+        run: |
+          npm run test:sandbox > sandbox.log 2>&1 || {
+            echo "::error title=sandbox tests failed::$(grep -v '^\s*$' sandbox.log | tail -c 1800 | sed ':a;N;$!ba;s/\n/%0A/g')"
+            exit 1
+          }
+          tail -n 15 sandbox.log
       - uses: actions/upload-artifact@v4
         with:
           name: mira-wasm
