@@ -193,7 +193,7 @@ function QuestCard({ q }: { q: QuestDetail }) {
 }
 
 const PRESETS = [
-  { label: 'Blitz · 3 × 50 sec', s: 50 },
+  { label: 'Blitz · 3 × 75 sec', s: 75 },
   { label: 'Lightning · 3 × 2 min', s: 120 },
   { label: 'Standard · 3 × 1 hour', s: 3600 },
   { label: 'Daily · 3 × 8 hours', s: 28800 },
