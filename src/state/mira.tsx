@@ -54,6 +54,7 @@ export function MiraProvider({ children }: { children: ReactNode }) {
   const [busy, setBusy] = useState<string | null>(null)
   const [toasts, setToasts] = useState<Toast[]>([])
   const nextToast = useRef(1)
+  const settled = useRef(new Map<number, QuestDetail>())
   const accountRef = useRef<string | null>(null)
   useEffect(() => {
     accountRef.current = account
@@ -78,8 +79,15 @@ export function MiraProvider({ children }: { children: ReactNode }) {
         view<LeaderRow[]>('get_leaderboard', { limit: 10 }),
         who ? view<Player>('get_player', { account_id: who }) : Promise.resolve(null),
       ])
+      // Settled quests never change: fetch them once, then only poll the live ones.
       const details = await Promise.all(
-        list.slice(0, DETAIL_LIMIT).map((q) => view<QuestDetail>('get_quest', { id: q.id })),
+        list.slice(0, DETAIL_LIMIT).map(async (q) => {
+          const cached = settled.current.get(q.id)
+          if (cached && q.status !== 'ACTIVE') return cached
+          const detail = await view<QuestDetail>('get_quest', { id: q.id })
+          if (detail.status !== 'ACTIVE') settled.current.set(q.id, detail)
+          return detail
+        }),
       )
       setOverview(ov)
       setQuests(details)
