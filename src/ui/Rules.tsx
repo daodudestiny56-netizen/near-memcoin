@@ -1,4 +1,5 @@
 import { CONTRACT_ID, EXPLORER } from '../chain/config'
+import { useMira } from '../state/mira'
 
 const STEPS = [
   ['Stake', 'Enter a quest by locking its stake in contract escrow. One entry per account.'],
@@ -8,10 +9,11 @@ const STEPS = [
 ]
 
 export default function Rules() {
+  const locked = useMira().overview?.config_locked === true
   return (
     <section className="section rules" id="rules">
       <div className="section-head">
-        <p className="kicker">06 · How it works</p>
+        <p className="kicker">07 · How it works</p>
         <h2>A game loop, not a promise of price.</h2>
         <p className="sub">MIRA is judged on its mechanic. Here is every rule, and every limit.</p>
       </div>
@@ -40,7 +42,11 @@ export default function Rules() {
           <h3>Why it can't be rugged</h3>
           <ul className="ticks">
             <li>There is no mint function. The full 10,000,000 supply is minted once at deploy; the only way it changes is by burning.</li>
-            <li>The owner can tune clocks and thresholds. The owner cannot pause, cannot touch escrow, and cannot change the burn splits: they are constants in the code.</li>
+            {locked ? (
+              <li><b>Config is locked.</b> The clocks and thresholds were frozen on-chain with <code>lock_config</code>. Nobody, including the owner, can change them now.</li>
+            ) : (
+              <li>The owner can tune clocks and thresholds until it calls the one-way <code>lock_config</code>. The owner cannot pause, cannot touch escrow, and cannot change the burn splits: they are constants in the code.</li>
+            )}
             <li>Every burn, payout and tax is emitted as an event and shown in the live feed.</li>
           </ul>
         </article>

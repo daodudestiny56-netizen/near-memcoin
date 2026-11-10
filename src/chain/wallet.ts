@@ -1,5 +1,6 @@
 import { NearConnector } from '@hot-labs/near-connect'
 import { CONTRACT_ID, GAS, NETWORK, USE_MOCK } from './config'
+import { failureMessage } from './outcome'
 
 interface ConnectedWallet {
   getAccounts(): Promise<{ accountId: string }[]>
@@ -103,8 +104,10 @@ export async function callMira(
   }
   if (import.meta.env.VITE_MOCK === '1') return (await import('./mock')).mockCall(methodName, args)
   const wallet = (await getConnector().wallet()) as unknown as ConnectedWallet
-  await wallet.signAndSendTransaction({
+  const outcome = await wallet.signAndSendTransaction({
     receiverId: CONTRACT_ID,
     actions: [{ type: 'FunctionCall', params: { methodName, args, gas: GAS, deposit } }],
   })
+  const failure = failureMessage(outcome)
+  if (failure) throw new Error(failure)
 }

@@ -24,6 +24,7 @@ export interface Overview {
   history: HistoryPoint[]
   splits: { burn_bps: number; rollover_bps: number; voters_bps: number }
   faucet_on: boolean
+  config_locked?: boolean
   decimals: number
 }
 

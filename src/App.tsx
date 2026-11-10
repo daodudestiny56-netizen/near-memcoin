@@ -6,6 +6,7 @@ import Quests from './ui/Quests'
 import Rituals from './ui/Rituals'
 import Feed from './ui/Feed'
 import Leaderboard from './ui/Leaderboard'
+import Simulation from './ui/Simulation'
 import Rules from './ui/Rules'
 import { CONTRACT_ID, EXPLORER, NETWORK } from './chain/config'
 
@@ -48,6 +49,7 @@ export default function App() {
           <Rituals />
           <Feed />
           <Leaderboard />
+          <Simulation />
           <Rules />
         </main>
         <Footer />
