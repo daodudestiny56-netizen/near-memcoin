@@ -8,7 +8,8 @@
     "test": "node --test",
     "build": "near-sdk-js build src/contract.js build/mira.wasm",
     "test:sandbox": "ava --timeout=5m sandbox/*.ava.js",
-    "sim": "node sim/simulate.js"
+    "sim": "node sim/simulate.js",
+    "sim:sweep": "node sim/sweep.js"
   },
   "dependencies": {
     "near-sdk-js": "2.0.0"
@@ -18,6 +19,8 @@
     "near-workspaces": "^4.0.0"
   },
   "ava": {
-    "files": ["sandbox/*.ava.js"]
+    "files": [
+      "sandbox/*.ava.js"
+    ]
   }
 }
