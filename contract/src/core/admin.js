@@ -10,12 +10,13 @@ const TUNABLE = [
   'starve_bps', 'starve_min', 'starve_idle_epochs', 'claim_amount',
 ]
 
-export function init(g, { owner_id, faucet_on = false, config = {} }) {
+export function init(g, { owner_id, faucet_on = false, config = {}, lock_config = false }) {
   req(g.store.get('m') === null, 'already initialised')
   req(typeof owner_id === 'string' && owner_id.length > 0, 'owner_id required')
   g.write('m', {
     owner: owner_id, total_supply: 0n, burned: 0n, rollover: 0n,
     next_quest: 1, completed: 0, ev_seq: 0, faucet_on: !!faucet_on, exempt: [owner_id],
+    config_locked: !!lock_config,
   })
   g.write('cfg', pickTunable(config))
   mint(g, owner_id, TOTAL_SUPPLY)
@@ -38,7 +39,18 @@ export function onlyOwner(g) {
 
 export function setConfig(g, config) {
   onlyOwner(g)
+  req(!g.meta().config_locked, 'config is locked')
   g.update('cfg', (c) => Object.assign(c, pickTunable(config)), {})
+}
+
+// One-way: after this nobody, including the owner, can ever change the clocks and thresholds.
+export function lockConfig(g) {
+  onlyOwner(g)
+  req(!g.meta().config_locked, 'config is already locked')
+  g.update('m', (m) => {
+    m.config_locked = true
+  })
+  g.emit('CONFIG_LOCKED', { owner: g.ctx.caller, config: g.cfg() })
 }
 
 export function setExempt(g, account, exempt) {

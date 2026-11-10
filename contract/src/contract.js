@@ -2,7 +2,7 @@ import { NearBindgen, near, call, view, initialize, NearPromise, encode, decode,
 import { Game } from './core/game.js'
 import { parseAmount, plain } from './core/codec.js'
 import { DECIMALS } from './core/constants.js'
-import { init as coreInit, setConfig, setExempt, setFaucet } from './core/admin.js'
+import { init as coreInit, lockConfig, setConfig, setExempt, setFaucet } from './core/admin.js'
 import { balanceOf, resolveTransfer, transfer } from './core/token.js'
 import { claim as coreClaim, gm as coreGm, leaderboard } from './core/players.js'
 import { join, listQuests, propose, submitProof } from './core/quests.js'
@@ -55,8 +55,8 @@ export class MiraContract {
   ready = false
 
   @initialize({})
-  init({ owner_id, faucet_on, config: cfg }) {
-    coreInit(game(), { owner_id, faucet_on, config: cfg || {} })
+  init({ owner_id, faucet_on, config: cfg, lock_config }) {
+    coreInit(game(), { owner_id, faucet_on, config: cfg || {}, lock_config })
     this.ready = true
   }
 
@@ -210,6 +210,11 @@ export class MiraContract {
   @call({})
   set_config({ config: cfg }) {
     setConfig(game(), cfg || {})
+  }
+
+  @call({})
+  lock_config() {
+    lockConfig(game())
   }
 
   @call({})

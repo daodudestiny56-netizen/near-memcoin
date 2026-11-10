@@ -127,3 +127,15 @@ test.serial('a full quest: propose, join, vote hidden, reveal, settle, burn', as
   t.is(dash.overview.quests_completed, 1)
   t.true(dash.events.length > 0)
 })
+
+test.serial('the owner can freeze the config for good, and nobody can unfreeze it', async (t) => {
+  const { mira, root, players } = t.context
+  t.is((await mira.view('get_overview')).config_locked, false)
+  await t.throwsAsync(() => players.ana.call(mira, 'lock_config', {}, GAS))
+  await root.call(mira, 'set_config', { config: { target_pulse: 5 } }, GAS)
+  await root.call(mira, 'lock_config', {}, GAS)
+  t.is((await mira.view('get_overview')).config_locked, true)
+  await t.throwsAsync(() => root.call(mira, 'set_config', { config: { target_pulse: 99 } }, GAS))
+  await t.throwsAsync(() => root.call(mira, 'lock_config', {}, GAS))
+  t.is((await mira.view('get_config')).target_pulse, 5)
+})

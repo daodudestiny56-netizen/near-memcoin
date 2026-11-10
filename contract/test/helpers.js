@@ -19,7 +19,9 @@ export function chain(options = {}) {
   const as = (caller, seconds = 0, deposit = 0n) =>
     new Game(store, deps, { caller, now: BigInt(seconds) * NS, self, deposit })
   if (options.init !== false) {
-    init(as('owner.testnet', 0), { owner_id: 'owner.testnet', faucet_on: true, config: options.config })
+    init(as('owner.testnet', 0), {
+      owner_id: 'owner.testnet', faucet_on: true, config: options.config, lock_config: options.lock,
+    })
   }
   return { as, store, logs, self, data }
 }

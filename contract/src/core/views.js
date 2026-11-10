@@ -27,6 +27,7 @@ export function overview(g) {
     history: hb.history,
     splits: { burn_bps, rollover_bps, voters_bps },
     faucet_on: meta.faucet_on,
+    config_locked: !!meta.config_locked,
     decimals: DECIMALS,
   }
 }
