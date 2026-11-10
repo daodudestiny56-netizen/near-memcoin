@@ -1,5 +1,7 @@
 import { CONTRACT_ID, EXPLORER } from '../chain/config'
+import { useEffect, useState } from 'react'
 import { useMira } from '../state/mira'
+import { accessKeyCount } from '../chain/rpc'
 
 const STEPS = [
   ['Stake', 'Enter a quest by locking its stake in contract escrow. One entry per account.'],
@@ -10,6 +12,10 @@ const STEPS = [
 
 export default function Rules() {
   const locked = useMira().overview?.config_locked === true
+  const [keys, setKeys] = useState<number | null>(null)
+  useEffect(() => {
+    void accessKeyCount().then(setKeys)
+  }, [])
   return (
     <section className="section rules" id="rules">
       <div className="section-head">
@@ -46,6 +52,12 @@ export default function Rules() {
               <li><b>Config is locked.</b> The clocks and thresholds were frozen on-chain with <code>lock_config</code>. Nobody, including the owner, can change them now.</li>
             ) : (
               <li>The owner can tune clocks and thresholds until it calls the one-way <code>lock_config</code>. The owner cannot pause, cannot touch escrow, and cannot change the burn splits: they are constants in the code.</li>
+            )}
+            {keys === 0 && (
+              <li><b>No keys.</b> The contract account has 0 access keys, read from the chain just now. Nobody can sign as it, so its code cannot be replaced or upgraded.</li>
+            )}
+            {keys !== null && keys > 0 && (
+              <li>The contract account still has {keys} access key{keys === 1 ? '' : 's'}, so its deployer can replace the code.</li>
             )}
             <li>Every burn, payout and tax is emitted as an event and shown in the live feed.</li>
           </ul>

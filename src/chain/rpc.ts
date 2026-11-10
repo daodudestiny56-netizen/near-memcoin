@@ -42,3 +42,27 @@ export async function view<T>(method: string, args: Record<string, unknown> = {}
   }
   throw lastError
 }
+
+// How many access keys the contract account has. 0 means nobody can sign as it, so its code cannot be replaced.
+export async function accessKeyCount(): Promise<number | null> {
+  if (import.meta.env.VITE_MOCK === '1' || !CONTRACT_ID) return null
+  for (const url of RPC_URLS) {
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          jsonrpc: '2.0',
+          id: 'mira-keys',
+          method: 'query',
+          params: { request_type: 'view_access_key_list', finality: 'final', account_id: CONTRACT_ID },
+        }),
+      })
+      const json = await response.json()
+      if (Array.isArray(json.result?.keys)) return json.result.keys.length
+    } catch {
+      // try the next RPC
+    }
+  }
+  return null
+}
