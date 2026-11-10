@@ -1,0 +1,2535 @@
+[
+  {
+    "key": "thriving",
+    "label": "Thriving",
+    "note": "30 players, 70% show up daily",
+    "days": 60,
+    "seed": 7,
+    "series": [
+      {
+        "day": 1,
+        "mood": "STEADY",
+        "supply": 10000000,
+        "circulating": 30000,
+        "burned": 0,
+        "rollover": 0,
+        "escrowed": 0,
+        "active": 23
+      },
+      {
+        "day": 2,
+        "mood": "STEADY",
+        "supply": 10000000,
+        "circulating": 30000,
+        "burned": 0,
+        "rollover": 0,
+        "escrowed": 0,
+        "active": 23
+      },
+      {
+        "day": 3,
+        "mood": "STEADY",
+        "supply": 9999950,
+        "circulating": 29812,
+        "burned": 50,
+        "rollover": 0,
+        "escrowed": 138,
+        "active": 16
+      },
+      {
+        "day": 4,
+        "mood": "THRIVING",
+        "supply": 9999852,
+        "circulating": 29706,
+        "burned": 148,
+        "rollover": 0,
+        "escrowed": 146,
+        "active": 19
+      },
+      {
+        "day": 5,
+        "mood": "THRIVING",
+        "supply": 9999765.99,
+        "circulating": 29539.99,
+        "burned": 234,
+        "rollover": 0,
+        "escrowed": 226,
+        "active": 18
+      },
+      {
+        "day": 6,
+        "mood": "THRIVING",
+        "supply": 9999643.99,
+        "circulating": 29441.99,
+        "burned": 356,
+        "rollover": 0,
+        "escrowed": 202,
+        "active": 20
+      },
+      {
+        "day": 7,
+        "mood": "THRIVING",
+        "supply": 9999545.99,
+        "circulating": 29263.99,
+        "burned": 454,
+        "rollover": 0,
+        "escrowed": 282,
+        "active": 20
+      },
+      {
+        "day": 8,
+        "mood": "THRIVING",
+        "supply": 9999399.99,
+        "circulating": 29245.99,
+        "burned": 600,
+        "rollover": 0,
+        "escrowed": 154,
+        "active": 19
+      },
+      {
+        "day": 9,
+        "mood": "THRIVING",
+        "supply": 9999325.99,
+        "circulating": 29087.99,
+        "burned": 674,
+        "rollover": 0,
+        "escrowed": 238,
+        "active": 20
+      },
+      {
+        "day": 10,
+        "mood": "THRIVING",
+        "supply": 9999203.99,
+        "circulating": 28957.99,
+        "burned": 796,
+        "rollover": 0,
+        "escrowed": 246,
+        "active": 20
+      },
+      {
+        "day": 11,
+        "mood": "THRIVING",
+        "supply": 9999081.99,
+        "circulating": 28791.99,
+        "burned": 918,
+        "rollover": 0,
+        "escrowed": 290,
+        "active": 23
+      },
+      {
+        "day": 12,
+        "mood": "THRIVING",
+        "supply": 9998935.99,
+        "circulating": 28709.99,
+        "burned": 1064,
+        "rollover": 0,
+        "escrowed": 226,
+        "active": 22
+      },
+      {
+        "day": 13,
+        "mood": "THRIVING",
+        "supply": 9998825.99,
+        "circulating": 28623.99,
+        "burned": 1174,
+        "rollover": 0,
+        "escrowed": 202,
+        "active": 19
+      },
+      {
+        "day": 14,
+        "mood": "THRIVING",
+        "supply": 9998727.99,
+        "circulating": 28521.99,
+        "burned": 1272,
+        "rollover": 0,
+        "escrowed": 206,
+        "active": 20
+      },
+      {
+        "day": 15,
+        "mood": "THRIVING",
+        "supply": 9998629.99,
+        "circulating": 28375.99,
+        "burned": 1370,
+        "rollover": 0,
+        "escrowed": 254,
+        "active": 21
+      },
+      {
+        "day": 16,
+        "mood": "THRIVING",
+        "supply": 9998507.99,
+        "circulating": 28277.99,
+        "burned": 1492,
+        "rollover": 0,
+        "escrowed": 230,
+        "active": 19
+      },
+      {
+        "day": 17,
+        "mood": "THRIVING",
+        "supply": 9998397.99,
+        "circulating": 28111.99,
+        "burned": 1602,
+        "rollover": 0,
+        "escrowed": 286,
+        "active": 25
+      },
+      {
+        "day": 18,
+        "mood": "THRIVING",
+        "supply": 9998275.99,
+        "circulating": 28069.99,
+        "burned": 1724,
+        "rollover": 0,
+        "escrowed": 206,
+        "active": 21
+      },
+      {
+        "day": 19,
+        "mood": "THRIVING",
+        "supply": 9998177.99,
+        "circulating": 27847.99,
+        "burned": 1822,
+        "rollover": 0,
+        "escrowed": 330,
+        "active": 26
+      },
+      {
+        "day": 20,
+        "mood": "THRIVING",
+        "supply": 9998031.99,
+        "circulating": 27785.99,
+        "burned": 1968,
+        "rollover": 0,
+        "escrowed": 246,
+        "active": 23
+      },
+      {
+        "day": 21,
+        "mood": "THRIVING",
+        "supply": 9997921.99,
+        "circulating": 27623.99,
+        "burned": 2078,
+        "rollover": 0,
+        "escrowed": 298,
+        "active": 21
+      },
+      {
+        "day": 22,
+        "mood": "THRIVING",
+        "supply": 9997787.99,
+        "circulating": 27509.99,
+        "burned": 2212,
+        "rollover": 0,
+        "escrowed": 278,
+        "active": 25
+      },
+      {
+        "day": 23,
+        "mood": "THRIVING",
+        "supply": 9997665.99,
+        "circulating": 27315.99,
+        "burned": 2334,
+        "rollover": 0,
+        "escrowed": 350,
+        "active": 21
+      },
+      {
+        "day": 24,
+        "mood": "THRIVING",
+        "supply": 9997507.99,
+        "circulating": 27325.99,
+        "burned": 2492,
+        "rollover": 0,
+        "escrowed": 182,
+        "active": 15
+      },
+      {
+        "day": 25,
+        "mood": "THRIVING",
+        "supply": 9997409.99,
+        "circulating": 27071.99,
+        "burned": 2590,
+        "rollover": 0,
+        "escrowed": 338,
+        "active": 23
+      },
+      {
+        "day": 26,
+        "mood": "THRIVING",
+        "supply": 9997251.99,
+        "circulating": 26937.99,
+        "burned": 2748,
+        "rollover": 0,
+        "escrowed": 314,
+        "active": 25
+      },
+      {
+        "day": 27,
+        "mood": "THRIVING",
+        "supply": 9997105.99,
+        "circulating": 26835.99,
+        "burned": 2894,
+        "rollover": 0,
+        "escrowed": 270,
+        "active": 25
+      },
+      {
+        "day": 28,
+        "mood": "THRIVING",
+        "supply": 9996983.99,
+        "circulating": 26733.99,
+        "burned": 3016,
+        "rollover": 0,
+        "escrowed": 250,
+        "active": 24
+      },
+      {
+        "day": 29,
+        "mood": "THRIVING",
+        "supply": 9996873.99,
+        "circulating": 26687.99,
+        "burned": 3126,
+        "rollover": 0,
+        "escrowed": 186,
+        "active": 21
+      },
+      {
+        "day": 30,
+        "mood": "THRIVING",
+        "supply": 9996775.99,
+        "circulating": 26533.99,
+        "burned": 3224,
+        "rollover": 0,
+        "escrowed": 242,
+        "active": 19
+      },
+      {
+        "day": 31,
+        "mood": "THRIVING",
+        "supply": 9996653.99,
+        "circulating": 26259.99,
+        "burned": 3346,
+        "rollover": 0,
+        "escrowed": 394,
+        "active": 23
+      },
+      {
+        "day": 32,
+        "mood": "THRIVING",
+        "supply": 9996483.99,
+        "circulating": 26229.99,
+        "burned": 3516,
+        "rollover": 0,
+        "escrowed": 254,
+        "active": 21
+      },
+      {
+        "day": 33,
+        "mood": "THRIVING",
+        "supply": 9996361.99,
+        "circulating": 26083.99,
+        "burned": 3638,
+        "rollover": 0,
+        "escrowed": 278,
+        "active": 22
+      },
+      {
+        "day": 34,
+        "mood": "THRIVING",
+        "supply": 9996239.99,
+        "circulating": 25997.99,
+        "burned": 3760,
+        "rollover": 0,
+        "escrowed": 242,
+        "active": 21
+      },
+      {
+        "day": 35,
+        "mood": "THRIVING",
+        "supply": 9996117.99,
+        "circulating": 25851.99,
+        "burned": 3882,
+        "rollover": 0,
+        "escrowed": 266,
+        "active": 18
+      },
+      {
+        "day": 36,
+        "mood": "THRIVING",
+        "supply": 9995995.99,
+        "circulating": 25849.99,
+        "burned": 4004,
+        "rollover": 0,
+        "escrowed": 146,
+        "active": 21
+      },
+      {
+        "day": 37,
+        "mood": "THRIVING",
+        "supply": 9995921.99,
+        "circulating": 25747.99,
+        "burned": 4078,
+        "rollover": 0,
+        "escrowed": 174,
+        "active": 20
+      },
+      {
+        "day": 38,
+        "mood": "THRIVING",
+        "supply": 9995823.99,
+        "circulating": 25581.99,
+        "burned": 4176,
+        "rollover": 0,
+        "escrowed": 242,
+        "active": 20
+      },
+      {
+        "day": 39,
+        "mood": "THRIVING",
+        "supply": 9995701.99,
+        "circulating": 25387.99,
+        "burned": 4298,
+        "rollover": 0,
+        "escrowed": 314,
+        "active": 25
+      },
+      {
+        "day": 40,
+        "mood": "THRIVING",
+        "supply": 9995555.99,
+        "circulating": 25281.99,
+        "burned": 4444,
+        "rollover": 0,
+        "escrowed": 274,
+        "active": 23
+      },
+      {
+        "day": 41,
+        "mood": "THRIVING",
+        "supply": 9995433.99,
+        "circulating": 25207.99,
+        "burned": 4566,
+        "rollover": 0,
+        "escrowed": 226,
+        "active": 24
+      },
+      {
+        "day": 42,
+        "mood": "THRIVING",
+        "supply": 9995323.99,
+        "circulating": 24949.99,
+        "burned": 4676,
+        "rollover": 0,
+        "escrowed": 374,
+        "active": 24
+      },
+      {
+        "day": 43,
+        "mood": "THRIVING",
+        "supply": 9995153.99,
+        "circulating": 24947.99,
+        "burned": 4846,
+        "rollover": 0,
+        "escrowed": 206,
+        "active": 20
+      },
+      {
+        "day": 44,
+        "mood": "THRIVING",
+        "supply": 9995055.99,
+        "circulating": 24781.99,
+        "burned": 4944,
+        "rollover": 0,
+        "escrowed": 274,
+        "active": 25
+      },
+      {
+        "day": 45,
+        "mood": "THRIVING",
+        "supply": 9994921.99,
+        "circulating": 24667.99,
+        "burned": 5078,
+        "rollover": 0,
+        "escrowed": 254,
+        "active": 23
+      },
+      {
+        "day": 46,
+        "mood": "THRIVING",
+        "supply": 9994799.99,
+        "circulating": 24581.99,
+        "burned": 5200,
+        "rollover": 0,
+        "escrowed": 218,
+        "active": 19
+      },
+      {
+        "day": 47,
+        "mood": "THRIVING",
+        "supply": 9994689.99,
+        "circulating": 24343.99,
+        "burned": 5310,
+        "rollover": 0,
+        "escrowed": 346,
+        "active": 24
+      },
+      {
+        "day": 48,
+        "mood": "THRIVING",
+        "supply": 9994531.99,
+        "circulating": 24245.99,
+        "burned": 5468,
+        "rollover": 0,
+        "escrowed": 286,
+        "active": 23
+      },
+      {
+        "day": 49,
+        "mood": "THRIVING",
+        "supply": 9994409.99,
+        "circulating": 24131.99,
+        "burned": 5590,
+        "rollover": 0,
+        "escrowed": 278,
+        "active": 22
+      },
+      {
+        "day": 50,
+        "mood": "THRIVING",
+        "supply": 9994287.99,
+        "circulating": 24009.99,
+        "burned": 5712,
+        "rollover": 0,
+        "escrowed": 278,
+        "active": 21
+      },
+      {
+        "day": 51,
+        "mood": "THRIVING",
+        "supply": 9994165.99,
+        "circulating": 23939.99,
+        "burned": 5834,
+        "rollover": 0,
+        "escrowed": 226,
+        "active": 22
+      },
+      {
+        "day": 52,
+        "mood": "THRIVING",
+        "supply": 9994055.99,
+        "circulating": 23801.99,
+        "burned": 5944,
+        "rollover": 0,
+        "escrowed": 254,
+        "active": 23
+      },
+      {
+        "day": 53,
+        "mood": "THRIVING",
+        "supply": 9993933.99,
+        "circulating": 23607.99,
+        "burned": 6066,
+        "rollover": 0,
+        "escrowed": 326,
+        "active": 22
+      },
+      {
+        "day": 54,
+        "mood": "THRIVING",
+        "supply": 9993775.99,
+        "circulating": 23501.99,
+        "burned": 6224,
+        "rollover": 0,
+        "escrowed": 274,
+        "active": 21
+      },
+      {
+        "day": 55,
+        "mood": "THRIVING",
+        "supply": 9993653.99,
+        "circulating": 23399.99,
+        "burned": 6346,
+        "rollover": 0,
+        "escrowed": 254,
+        "active": 24
+      },
+      {
+        "day": 56,
+        "mood": "THRIVING",
+        "supply": 9993531.99,
+        "circulating": 23313.99,
+        "burned": 6468,
+        "rollover": 0,
+        "escrowed": 218,
+        "active": 17
+      },
+      {
+        "day": 57,
+        "mood": "THRIVING",
+        "supply": 9993421.99,
+        "circulating": 23215.99,
+        "burned": 6578,
+        "rollover": 0,
+        "escrowed": 206,
+        "active": 18
+      },
+      {
+        "day": 58,
+        "mood": "THRIVING",
+        "supply": 9993323.99,
+        "circulating": 23093.99,
+        "burned": 6676,
+        "rollover": 0,
+        "escrowed": 230,
+        "active": 17
+      },
+      {
+        "day": 59,
+        "mood": "THRIVING",
+        "supply": 9993201.99,
+        "circulating": 22879.99,
+        "burned": 6798,
+        "rollover": 0,
+        "escrowed": 322,
+        "active": 23
+      },
+      {
+        "day": 60,
+        "mood": "THRIVING",
+        "supply": 9993055.99,
+        "circulating": 22741.99,
+        "burned": 6944,
+        "rollover": 0,
+        "escrowed": 314,
+        "active": 24
+      }
+    ],
+    "moodDays": {
+      "THRIVING": 57,
+      "STEADY": 3,
+      "HUNGRY": 0,
+      "STARVING": 0
+    },
+    "rejections": {
+      "MIRA is STEADY, not starving": 90,
+      "MIRA is THRIVING, not starving": 1710
+    },
+    "settled": 57,
+    "voided": 0,
+    "burned": 6944,
+    "burnedByFailedStakes": 4044,
+    "burnedByProposals": 2900,
+    "circulatingStart": 30000,
+    "circulatingEnd": 22741.99,
+    "rolloverEnd": 0,
+    "starveEvents": 0,
+    "keeperEarned": 0,
+    "honestChange": -7258,
+    "honestPlayers": 30
+  },
+  {
+    "key": "fading",
+    "label": "Fading",
+    "note": "30 players, attendance falls from 75% to 10%",
+    "days": 60,
+    "seed": 7,
+    "series": [
+      {
+        "day": 1,
+        "mood": "STEADY",
+        "supply": 10000000,
+        "circulating": 30000,
+        "burned": 0,
+        "rollover": 0,
+        "escrowed": 0,
+        "active": 24
+      },
+      {
+        "day": 2,
+        "mood": "STEADY",
+        "supply": 10000000,
+        "circulating": 30000,
+        "burned": 0,
+        "rollover": 0,
+        "escrowed": 0,
+        "active": 24
+      },
+      {
+        "day": 3,
+        "mood": "STEADY",
+        "supply": 9999950,
+        "circulating": 29804,
+        "burned": 50,
+        "rollover": 0,
+        "escrowed": 146,
+        "active": 17
+      },
+      {
+        "day": 4,
+        "mood": "THRIVING",
+        "supply": 9999852,
+        "circulating": 29710,
+        "burned": 148,
+        "rollover": 0,
+        "escrowed": 142,
+        "active": 20
+      },
+      {
+        "day": 5,
+        "mood": "THRIVING",
+        "supply": 9999766,
+        "circulating": 29560,
+        "burned": 234,
+        "rollover": 0,
+        "escrowed": 206,
+        "active": 17
+      },
+      {
+        "day": 6,
+        "mood": "THRIVING",
+        "supply": 9999655.99,
+        "circulating": 29481.99,
+        "burned": 344,
+        "rollover": 0,
+        "escrowed": 174,
+        "active": 20
+      },
+      {
+        "day": 7,
+        "mood": "THRIVING",
+        "supply": 9999557.99,
+        "circulating": 29315.99,
+        "burned": 442,
+        "rollover": 0,
+        "escrowed": 242,
+        "active": 19
+      },
+      {
+        "day": 8,
+        "mood": "THRIVING",
+        "supply": 9999435.99,
+        "circulating": 29289.99,
+        "burned": 564,
+        "rollover": 0,
+        "escrowed": 146,
+        "active": 18
+      },
+      {
+        "day": 9,
+        "mood": "THRIVING",
+        "supply": 9999361.99,
+        "circulating": 29159.99,
+        "burned": 638,
+        "rollover": 0,
+        "escrowed": 202,
+        "active": 20
+      },
+      {
+        "day": 10,
+        "mood": "THRIVING",
+        "supply": 9999251.99,
+        "circulating": 29029.99,
+        "burned": 748,
+        "rollover": 0,
+        "escrowed": 222,
+        "active": 19
+      },
+      {
+        "day": 11,
+        "mood": "THRIVING",
+        "supply": 9999141.99,
+        "circulating": 28859.99,
+        "burned": 858,
+        "rollover": 0,
+        "escrowed": 282,
+        "active": 22
+      },
+      {
+        "day": 12,
+        "mood": "THRIVING",
+        "supply": 9998995.99,
+        "circulating": 28757.99,
+        "burned": 1004,
+        "rollover": 0,
+        "escrowed": 238,
+        "active": 21
+      },
+      {
+        "day": 13,
+        "mood": "THRIVING",
+        "supply": 9998873.99,
+        "circulating": 28719.99,
+        "burned": 1126,
+        "rollover": 0,
+        "escrowed": 154,
+        "active": 19
+      },
+      {
+        "day": 14,
+        "mood": "THRIVING",
+        "supply": 9998799.99,
+        "circulating": 28653.99,
+        "burned": 1200,
+        "rollover": 0,
+        "escrowed": 146,
+        "active": 18
+      },
+      {
+        "day": 15,
+        "mood": "THRIVING",
+        "supply": 9998713.99,
+        "circulating": 28523.99,
+        "burned": 1286,
+        "rollover": 0,
+        "escrowed": 190,
+        "active": 20
+      },
+      {
+        "day": 16,
+        "mood": "THRIVING",
+        "supply": 9998615.99,
+        "circulating": 28361.99,
+        "burned": 1384,
+        "rollover": 0,
+        "escrowed": 254,
+        "active": 19
+      },
+      {
+        "day": 17,
+        "mood": "THRIVING",
+        "supply": 9998493.99,
+        "circulating": 28175.99,
+        "burned": 1506,
+        "rollover": 0,
+        "escrowed": 318,
+        "active": 19
+      },
+      {
+        "day": 18,
+        "mood": "THRIVING",
+        "supply": 9998347.99,
+        "circulating": 28153.99,
+        "burned": 1652,
+        "rollover": 0,
+        "escrowed": 194,
+        "active": 18
+      },
+      {
+        "day": 19,
+        "mood": "THRIVING",
+        "supply": 9998249.99,
+        "circulating": 28091.99,
+        "burned": 1750,
+        "rollover": 0,
+        "escrowed": 158,
+        "active": 13
+      },
+      {
+        "day": 20,
+        "mood": "THRIVING",
+        "supply": 9998151.99,
+        "circulating": 27921.99,
+        "burned": 1848,
+        "rollover": 0,
+        "escrowed": 230,
+        "active": 18
+      },
+      {
+        "day": 21,
+        "mood": "THRIVING",
+        "supply": 9998029.99,
+        "circulating": 27827.99,
+        "burned": 1970,
+        "rollover": 0,
+        "escrowed": 202,
+        "active": 14
+      },
+      {
+        "day": 22,
+        "mood": "THRIVING",
+        "supply": 9997919.99,
+        "circulating": 27693.99,
+        "burned": 2080,
+        "rollover": 0,
+        "escrowed": 226,
+        "active": 20
+      },
+      {
+        "day": 23,
+        "mood": "THRIVING",
+        "supply": 9997809.99,
+        "circulating": 27619.99,
+        "burned": 2190,
+        "rollover": 0,
+        "escrowed": 190,
+        "active": 20
+      },
+      {
+        "day": 24,
+        "mood": "THRIVING",
+        "supply": 9997711.99,
+        "circulating": 27565.99,
+        "burned": 2288,
+        "rollover": 0,
+        "escrowed": 146,
+        "active": 17
+      },
+      {
+        "day": 25,
+        "mood": "THRIVING",
+        "supply": 9997625.99,
+        "circulating": 27391.99,
+        "burned": 2374,
+        "rollover": 0,
+        "escrowed": 234,
+        "active": 15
+      },
+      {
+        "day": 26,
+        "mood": "THRIVING",
+        "supply": 9997503.99,
+        "circulating": 27381.99,
+        "burned": 2496,
+        "rollover": 0,
+        "escrowed": 122,
+        "active": 8
+      },
+      {
+        "day": 27,
+        "mood": "HUNGRY",
+        "supply": 9997432.99,
+        "circulating": 27227.99,
+        "burned": 2567,
+        "rollover": 0,
+        "escrowed": 205,
+        "active": 16
+      },
+      {
+        "day": 28,
+        "mood": "THRIVING",
+        "supply": 9997334.99,
+        "circulating": 27120.99,
+        "burned": 2665,
+        "rollover": 0,
+        "escrowed": 214,
+        "active": 15
+      },
+      {
+        "day": 29,
+        "mood": "THRIVING",
+        "supply": 9997224.99,
+        "circulating": 27070.99,
+        "burned": 2775,
+        "rollover": 0,
+        "escrowed": 154,
+        "active": 12
+      },
+      {
+        "day": 30,
+        "mood": "THRIVING",
+        "supply": 9997126.99,
+        "circulating": 26964.99,
+        "burned": 2873,
+        "rollover": 0,
+        "escrowed": 162,
+        "active": 13
+      },
+      {
+        "day": 31,
+        "mood": "THRIVING",
+        "supply": 9997028.99,
+        "circulating": 26886.99,
+        "burned": 2971,
+        "rollover": 0,
+        "escrowed": 142,
+        "active": 10
+      },
+      {
+        "day": 32,
+        "mood": "THRIVING",
+        "supply": 9996942.99,
+        "circulating": 26816.99,
+        "burned": 3057,
+        "rollover": 0,
+        "escrowed": 126,
+        "active": 8
+      },
+      {
+        "day": 33,
+        "mood": "STEADY",
+        "supply": 9996912.99,
+        "circulating": 26894.99,
+        "burned": 3087,
+        "rollover": 18,
+        "escrowed": 0,
+        "active": 10
+      },
+      {
+        "day": 34,
+        "mood": "HUNGRY",
+        "supply": 9996862.99,
+        "circulating": 26714.99,
+        "burned": 3137,
+        "rollover": 0,
+        "escrowed": 148,
+        "active": 14
+      },
+      {
+        "day": 35,
+        "mood": "THRIVING",
+        "supply": 9996776.99,
+        "circulating": 26670.99,
+        "burned": 3223,
+        "rollover": 0,
+        "escrowed": 106,
+        "active": 11
+      },
+      {
+        "day": 36,
+        "mood": "STEADY",
+        "supply": 9996706.99,
+        "circulating": 26600.99,
+        "burned": 3293,
+        "rollover": 0,
+        "escrowed": 106,
+        "active": 10
+      },
+      {
+        "day": 37,
+        "mood": "STEADY",
+        "supply": 9996636.99,
+        "circulating": 26518.99,
+        "burned": 3363,
+        "rollover": 0,
+        "escrowed": 118,
+        "active": 11
+      },
+      {
+        "day": 38,
+        "mood": "THRIVING",
+        "supply": 9996562.99,
+        "circulating": 26440.99,
+        "burned": 3437,
+        "rollover": 0,
+        "escrowed": 122,
+        "active": 9
+      },
+      {
+        "day": 39,
+        "mood": "STEADY",
+        "supply": 9996532.99,
+        "circulating": 26514.99,
+        "burned": 3467,
+        "rollover": 18,
+        "escrowed": 0,
+        "active": 7
+      },
+      {
+        "day": 40,
+        "mood": "STARVING",
+        "supply": 9996532.99,
+        "circulating": 26389.42,
+        "burned": 3467,
+        "rollover": 143.57,
+        "escrowed": 0,
+        "active": 8
+      },
+      {
+        "day": 41,
+        "mood": "STARVING",
+        "supply": 9996482.99,
+        "circulating": 26085.14,
+        "burned": 3517,
+        "rollover": 76.27,
+        "escrowed": 321.57,
+        "active": 14
+      },
+      {
+        "day": 42,
+        "mood": "THRIVING",
+        "supply": 9996384.99,
+        "circulating": 26166.72,
+        "burned": 3615,
+        "rollover": 0,
+        "escrowed": 218.27,
+        "active": 9
+      },
+      {
+        "day": 43,
+        "mood": "STEADY",
+        "supply": 9996294.99,
+        "circulating": 26140.99,
+        "burned": 3705,
+        "rollover": 0,
+        "escrowed": 154,
+        "active": 10
+      },
+      {
+        "day": 44,
+        "mood": "STEADY",
+        "supply": 9996254.99,
+        "circulating": 26230.99,
+        "burned": 3745,
+        "rollover": 24,
+        "escrowed": 0,
+        "active": 12
+      },
+      {
+        "day": 45,
+        "mood": "HUNGRY",
+        "supply": 9996254.99,
+        "circulating": 26230.99,
+        "burned": 3745,
+        "rollover": 24,
+        "escrowed": 0,
+        "active": 6
+      },
+      {
+        "day": 46,
+        "mood": "STARVING",
+        "supply": 9996254.99,
+        "circulating": 26146.85,
+        "burned": 3745,
+        "rollover": 108.14,
+        "escrowed": 0,
+        "active": 14
+      },
+      {
+        "day": 47,
+        "mood": "HUNGRY",
+        "supply": 9996254.99,
+        "circulating": 26146.85,
+        "burned": 3745,
+        "rollover": 108.14,
+        "escrowed": 0,
+        "active": 4
+      },
+      {
+        "day": 48,
+        "mood": "STARVING",
+        "supply": 9996254.99,
+        "circulating": 26006.51,
+        "burned": 3745,
+        "rollover": 248.48,
+        "escrowed": 0,
+        "active": 7
+      },
+      {
+        "day": 49,
+        "mood": "STARVING",
+        "supply": 9996254.99,
+        "circulating": 25881.19,
+        "burned": 3745,
+        "rollover": 373.8,
+        "escrowed": 0,
+        "active": 9
+      },
+      {
+        "day": 50,
+        "mood": "STARVING",
+        "supply": 9996204.99,
+        "circulating": 25697.14,
+        "burned": 3795,
+        "rollover": 124.05,
+        "escrowed": 383.8,
+        "active": 5
+      },
+      {
+        "day": 51,
+        "mood": "STARVING",
+        "supply": 9996154.99,
+        "circulating": 25430.57,
+        "burned": 3845,
+        "rollover": 122.57,
+        "escrowed": 601.85,
+        "active": 8
+      },
+      {
+        "day": 52,
+        "mood": "STEADY",
+        "supply": 9996084.99,
+        "circulating": 25888.42,
+        "burned": 3915,
+        "rollover": 0,
+        "escrowed": 196.57,
+        "active": 5
+      },
+      {
+        "day": 53,
+        "mood": "HUNGRY",
+        "supply": 9996077.99,
+        "circulating": 26068.99,
+        "burned": 3922,
+        "rollover": 9,
+        "escrowed": 0,
+        "active": 7
+      },
+      {
+        "day": 54,
+        "mood": "STARVING",
+        "supply": 9996077.99,
+        "circulating": 25943.22,
+        "burned": 3922,
+        "rollover": 134.77,
+        "escrowed": 0,
+        "active": 7
+      },
+      {
+        "day": 55,
+        "mood": "STARVING",
+        "supply": 9996077.99,
+        "circulating": 25806.08,
+        "burned": 3922,
+        "rollover": 271.91,
+        "escrowed": 0,
+        "active": 3
+      },
+      {
+        "day": 56,
+        "mood": "STARVING",
+        "supply": 9996077.99,
+        "circulating": 25646.63,
+        "burned": 3922,
+        "rollover": 431.36,
+        "escrowed": 0,
+        "active": 6
+      },
+      {
+        "day": 57,
+        "mood": "STARVING",
+        "supply": 9996077.99,
+        "circulating": 25503.53,
+        "burned": 3922,
+        "rollover": 574.46,
+        "escrowed": 0,
+        "active": 5
+      },
+      {
+        "day": 58,
+        "mood": "STARVING",
+        "supply": 9996077.99,
+        "circulating": 25374.84,
+        "burned": 3922,
+        "rollover": 703.15,
+        "escrowed": 0,
+        "active": 5
+      },
+      {
+        "day": 59,
+        "mood": "STARVING",
+        "supply": 9996077.99,
+        "circulating": 25230.91,
+        "burned": 3922,
+        "rollover": 847.08,
+        "escrowed": 0,
+        "active": 4
+      },
+      {
+        "day": 60,
+        "mood": "STARVING",
+        "supply": 9996077.99,
+        "circulating": 25078.43,
+        "burned": 3922,
+        "rollover": 999.56,
+        "escrowed": 0,
+        "active": 4
+      }
+    ],
+    "moodDays": {
+      "THRIVING": 31,
+      "STEADY": 10,
+      "HUNGRY": 5,
+      "STARVING": 14
+    },
+    "rejections": {
+      "MIRA is STEADY, not starving": 300,
+      "MIRA is THRIVING, not starving": 930,
+      "MIRA is HUNGRY, not starving": 150,
+      "account was active recently": 158
+    },
+    "settled": 40,
+    "voided": 1,
+    "burned": 3922,
+    "burnedByFailedStakes": 1872,
+    "burnedByProposals": 2050,
+    "circulatingStart": 30000,
+    "circulatingEnd": 25078.43,
+    "rolloverEnd": 999.56,
+    "starveEvents": 262,
+    "keeperEarned": 447.2,
+    "honestChange": -5368.76,
+    "honestPlayers": 30
+  },
+  {
+    "key": "quiet",
+    "label": "Quiet",
+    "note": "30 players, 6% show up daily",
+    "days": 60,
+    "seed": 7,
+    "series": [
+      {
+        "day": 1,
+        "mood": "STEADY",
+        "supply": 10000000,
+        "circulating": 30000,
+        "burned": 0,
+        "rollover": 0,
+        "escrowed": 0,
+        "active": 1
+      },
+      {
+        "day": 2,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 29792,
+        "burned": 0,
+        "rollover": 208,
+        "escrowed": 0,
+        "active": 3
+      },
+      {
+        "day": 3,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 29586,
+        "burned": 0,
+        "rollover": 414,
+        "escrowed": 0,
+        "active": 1
+      },
+      {
+        "day": 4,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 29381.74,
+        "burned": 0,
+        "rollover": 618.25,
+        "escrowed": 0,
+        "active": 3
+      },
+      {
+        "day": 5,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 29187.28,
+        "burned": 0,
+        "rollover": 812.71,
+        "escrowed": 0,
+        "active": 2
+      },
+      {
+        "day": 6,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 28971.09,
+        "burned": 0,
+        "rollover": 1028.9,
+        "escrowed": 0,
+        "active": 0
+      },
+      {
+        "day": 7,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 28741.38,
+        "burned": 0,
+        "rollover": 1258.61,
+        "escrowed": 0,
+        "active": 0
+      },
+      {
+        "day": 8,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 28513.97,
+        "burned": 0,
+        "rollover": 1486.02,
+        "escrowed": 0,
+        "active": 0
+      },
+      {
+        "day": 9,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 28304.05,
+        "burned": 0,
+        "rollover": 1695.94,
+        "escrowed": 0,
+        "active": 2
+      },
+      {
+        "day": 10,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 28096.23,
+        "burned": 0,
+        "rollover": 1903.76,
+        "escrowed": 0,
+        "active": 1
+      },
+      {
+        "day": 11,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 27905.4,
+        "burned": 0,
+        "rollover": 2094.59,
+        "escrowed": 0,
+        "active": 3
+      },
+      {
+        "day": 12,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 27708.72,
+        "burned": 0,
+        "rollover": 2291.27,
+        "escrowed": 0,
+        "active": 0
+      },
+      {
+        "day": 13,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 27506.1,
+        "burned": 0,
+        "rollover": 2493.89,
+        "escrowed": 0,
+        "active": 2
+      },
+      {
+        "day": 14,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 27312.6,
+        "burned": 0,
+        "rollover": 2687.39,
+        "escrowed": 0,
+        "active": 1
+      },
+      {
+        "day": 15,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 27120.75,
+        "burned": 0,
+        "rollover": 2879.24,
+        "escrowed": 0,
+        "active": 2
+      },
+      {
+        "day": 16,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 26951.52,
+        "burned": 0,
+        "rollover": 3048.47,
+        "escrowed": 0,
+        "active": 4
+      },
+      {
+        "day": 17,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 26790.45,
+        "burned": 0,
+        "rollover": 3209.54,
+        "escrowed": 0,
+        "active": 3
+      },
+      {
+        "day": 18,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 26603.19,
+        "burned": 0,
+        "rollover": 3396.8,
+        "escrowed": 0,
+        "active": 0
+      },
+      {
+        "day": 19,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 26397.16,
+        "burned": 0,
+        "rollover": 3602.83,
+        "escrowed": 0,
+        "active": 0
+      },
+      {
+        "day": 20,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 26200,
+        "burned": 0,
+        "rollover": 3799.99,
+        "escrowed": 0,
+        "active": 1
+      },
+      {
+        "day": 21,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 26011.69,
+        "burned": 0,
+        "rollover": 3988.3,
+        "escrowed": 0,
+        "active": 1
+      },
+      {
+        "day": 22,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 25824.99,
+        "burned": 0,
+        "rollover": 4175,
+        "escrowed": 0,
+        "active": 1
+      },
+      {
+        "day": 23,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 25659.8,
+        "burned": 0,
+        "rollover": 4340.19,
+        "escrowed": 0,
+        "active": 4
+      },
+      {
+        "day": 24,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 25515.89,
+        "burned": 0,
+        "rollover": 4484.1,
+        "escrowed": 0,
+        "active": 4
+      },
+      {
+        "day": 25,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 25360.13,
+        "burned": 0,
+        "rollover": 4639.86,
+        "escrowed": 0,
+        "active": 2
+      },
+      {
+        "day": 26,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 25186.29,
+        "burned": 0,
+        "rollover": 4813.7,
+        "escrowed": 0,
+        "active": 1
+      },
+      {
+        "day": 27,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 25007.45,
+        "burned": 0,
+        "rollover": 4992.54,
+        "escrowed": 0,
+        "active": 1
+      },
+      {
+        "day": 28,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 24836.68,
+        "burned": 0,
+        "rollover": 5163.31,
+        "escrowed": 0,
+        "active": 2
+      },
+      {
+        "day": 29,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 24667.36,
+        "burned": 0,
+        "rollover": 5332.63,
+        "escrowed": 0,
+        "active": 1
+      },
+      {
+        "day": 30,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 24493.07,
+        "burned": 0,
+        "rollover": 5506.92,
+        "escrowed": 0,
+        "active": 1
+      },
+      {
+        "day": 31,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 24314.3,
+        "burned": 0,
+        "rollover": 5685.69,
+        "escrowed": 0,
+        "active": 0
+      },
+      {
+        "day": 32,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 24143.23,
+        "burned": 0,
+        "rollover": 5856.76,
+        "escrowed": 0,
+        "active": 2
+      },
+      {
+        "day": 33,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 23979.85,
+        "burned": 0,
+        "rollover": 6020.14,
+        "escrowed": 0,
+        "active": 1
+      },
+      {
+        "day": 34,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 23806.03,
+        "burned": 0,
+        "rollover": 6193.96,
+        "escrowed": 0,
+        "active": 0
+      },
+      {
+        "day": 35,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 23645.43,
+        "burned": 0,
+        "rollover": 6354.56,
+        "escrowed": 0,
+        "active": 3
+      },
+      {
+        "day": 36,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 23498.04,
+        "burned": 0,
+        "rollover": 6501.95,
+        "escrowed": 0,
+        "active": 2
+      },
+      {
+        "day": 37,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 23334.66,
+        "burned": 0,
+        "rollover": 6665.33,
+        "escrowed": 0,
+        "active": 0
+      },
+      {
+        "day": 38,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 23172.8,
+        "burned": 0,
+        "rollover": 6827.19,
+        "escrowed": 0,
+        "active": 2
+      },
+      {
+        "day": 39,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 23023.99,
+        "burned": 0,
+        "rollover": 6976,
+        "escrowed": 0,
+        "active": 3
+      },
+      {
+        "day": 40,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 22882.23,
+        "burned": 0,
+        "rollover": 7117.76,
+        "escrowed": 0,
+        "active": 2
+      },
+      {
+        "day": 41,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 22730.52,
+        "burned": 0,
+        "rollover": 7269.47,
+        "escrowed": 0,
+        "active": 1
+      },
+      {
+        "day": 42,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 22579.94,
+        "burned": 0,
+        "rollover": 7420.05,
+        "escrowed": 0,
+        "active": 2
+      },
+      {
+        "day": 43,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 22430.53,
+        "burned": 0,
+        "rollover": 7569.46,
+        "escrowed": 0,
+        "active": 1
+      },
+      {
+        "day": 44,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 22288.01,
+        "burned": 0,
+        "rollover": 7711.98,
+        "escrowed": 0,
+        "active": 4
+      },
+      {
+        "day": 45,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 22157.89,
+        "burned": 0,
+        "rollover": 7842.1,
+        "escrowed": 0,
+        "active": 2
+      },
+      {
+        "day": 46,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 22023.24,
+        "burned": 0,
+        "rollover": 7976.75,
+        "escrowed": 0,
+        "active": 3
+      },
+      {
+        "day": 47,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 21900.42,
+        "burned": 0,
+        "rollover": 8099.57,
+        "escrowed": 0,
+        "active": 4
+      },
+      {
+        "day": 48,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 21768.24,
+        "burned": 0,
+        "rollover": 8231.75,
+        "escrowed": 0,
+        "active": 1
+      },
+      {
+        "day": 49,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 21621.15,
+        "burned": 0,
+        "rollover": 8378.84,
+        "escrowed": 0,
+        "active": 1
+      },
+      {
+        "day": 50,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 21470.18,
+        "burned": 0,
+        "rollover": 8529.81,
+        "escrowed": 0,
+        "active": 0
+      },
+      {
+        "day": 51,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 21320.37,
+        "burned": 0,
+        "rollover": 8679.62,
+        "escrowed": 0,
+        "active": 1
+      },
+      {
+        "day": 52,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 21177.09,
+        "burned": 0,
+        "rollover": 8822.9,
+        "escrowed": 0,
+        "active": 1
+      },
+      {
+        "day": 53,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 21060.56,
+        "burned": 0,
+        "rollover": 8939.43,
+        "escrowed": 0,
+        "active": 6
+      },
+      {
+        "day": 54,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 20949.94,
+        "burned": 0,
+        "rollover": 9050.05,
+        "escrowed": 0,
+        "active": 3
+      },
+      {
+        "day": 55,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 20824.59,
+        "burned": 0,
+        "rollover": 9175.4,
+        "escrowed": 0,
+        "active": 3
+      },
+      {
+        "day": 56,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 20701,
+        "burned": 0,
+        "rollover": 9298.99,
+        "escrowed": 0,
+        "active": 2
+      },
+      {
+        "day": 57,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 20568.91,
+        "burned": 0,
+        "rollover": 9431.08,
+        "escrowed": 0,
+        "active": 2
+      },
+      {
+        "day": 58,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 20447.82,
+        "burned": 0,
+        "rollover": 9552.17,
+        "escrowed": 0,
+        "active": 3
+      },
+      {
+        "day": 59,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 20332.06,
+        "burned": 0,
+        "rollover": 9667.93,
+        "escrowed": 0,
+        "active": 3
+      },
+      {
+        "day": 60,
+        "mood": "STARVING",
+        "supply": 10000000,
+        "circulating": 20217.35,
+        "burned": 0,
+        "rollover": 9782.64,
+        "escrowed": 0,
+        "active": 4
+      }
+    ],
+    "moodDays": {
+      "THRIVING": 0,
+      "STEADY": 1,
+      "HUNGRY": 0,
+      "STARVING": 59
+    },
+    "rejections": {
+      "MIRA is STEADY, not starving": 30,
+      "account was active recently": 206
+    },
+    "settled": 0,
+    "voided": 0,
+    "burned": 0,
+    "burnedByFailedStakes": 0,
+    "burnedByProposals": 0,
+    "circulatingStart": 30000,
+    "circulatingEnd": 20217.35,
+    "rolloverEnd": 9782.64,
+    "starveEvents": 1564,
+    "keeperEarned": 2445.66,
+    "honestChange": -12228.3,
+    "honestPlayers": 30
+  },
+  {
+    "key": "sybil",
+    "label": "Sybil ring",
+    "note": "30 players at 50% plus 12 colluding accounts",
+    "days": 60,
+    "seed": 7,
+    "series": [
+      {
+        "day": 1,
+        "mood": "STEADY",
+        "supply": 10000000,
+        "circulating": 42000,
+        "burned": 0,
+        "rollover": 0,
+        "escrowed": 0,
+        "active": 29
+      },
+      {
+        "day": 2,
+        "mood": "STEADY",
+        "supply": 10000000,
+        "circulating": 42000,
+        "burned": 0,
+        "rollover": 0,
+        "escrowed": 0,
+        "active": 29
+      },
+      {
+        "day": 3,
+        "mood": "STEADY",
+        "supply": 10000000,
+        "circulating": 42000,
+        "burned": 0,
+        "rollover": 0,
+        "escrowed": 0,
+        "active": 16
+      },
+      {
+        "day": 4,
+        "mood": "HUNGRY",
+        "supply": 10000000,
+        "circulating": 42000,
+        "burned": 0,
+        "rollover": 0,
+        "escrowed": 0,
+        "active": 22
+      },
+      {
+        "day": 5,
+        "mood": "STEADY",
+        "supply": 10000000,
+        "circulating": 42000,
+        "burned": 0,
+        "rollover": 0,
+        "escrowed": 0,
+        "active": 31
+      },
+      {
+        "day": 6,
+        "mood": "THRIVING",
+        "supply": 9999950,
+        "circulating": 41584,
+        "burned": 50,
+        "rollover": 0,
+        "escrowed": 366,
+        "active": 25
+      },
+      {
+        "day": 7,
+        "mood": "THRIVING",
+        "supply": 9999779.99,
+        "circulating": 41289.99,
+        "burned": 220,
+        "rollover": 0,
+        "escrowed": 490,
+        "active": 25
+      },
+      {
+        "day": 8,
+        "mood": "THRIVING",
+        "supply": 9999585.99,
+        "circulating": 41135.99,
+        "burned": 414,
+        "rollover": 0,
+        "escrowed": 450,
+        "active": 28
+      },
+      {
+        "day": 9,
+        "mood": "THRIVING",
+        "supply": 9999415.99,
+        "circulating": 40973.99,
+        "burned": 584,
+        "rollover": 0,
+        "escrowed": 442,
+        "active": 19
+      },
+      {
+        "day": 10,
+        "mood": "THRIVING",
+        "supply": 9999233.99,
+        "circulating": 40747.99,
+        "burned": 766,
+        "rollover": 0,
+        "escrowed": 486,
+        "active": 27
+      },
+      {
+        "day": 11,
+        "mood": "THRIVING",
+        "supply": 9999039.99,
+        "circulating": 40649.99,
+        "burned": 960,
+        "rollover": 0,
+        "escrowed": 390,
+        "active": 21
+      },
+      {
+        "day": 12,
+        "mood": "THRIVING",
+        "supply": 9998881.99,
+        "circulating": 40403.99,
+        "burned": 1118,
+        "rollover": 0,
+        "escrowed": 478,
+        "active": 28
+      },
+      {
+        "day": 13,
+        "mood": "THRIVING",
+        "supply": 9998687.99,
+        "circulating": 40181.99,
+        "burned": 1312,
+        "rollover": 0,
+        "escrowed": 506,
+        "active": 28
+      },
+      {
+        "day": 14,
+        "mood": "THRIVING",
+        "supply": 9998493.99,
+        "circulating": 39971.99,
+        "burned": 1506,
+        "rollover": 0,
+        "escrowed": 522,
+        "active": 31
+      },
+      {
+        "day": 15,
+        "mood": "THRIVING",
+        "supply": 9998299.99,
+        "circulating": 39861.99,
+        "burned": 1700,
+        "rollover": 0,
+        "escrowed": 438,
+        "active": 25
+      },
+      {
+        "day": 16,
+        "mood": "THRIVING",
+        "supply": 9998129.99,
+        "circulating": 39627.99,
+        "burned": 1870,
+        "rollover": 0,
+        "escrowed": 502,
+        "active": 25
+      },
+      {
+        "day": 17,
+        "mood": "THRIVING",
+        "supply": 9997923.99,
+        "circulating": 39545.99,
+        "burned": 2076,
+        "rollover": 0,
+        "escrowed": 378,
+        "active": 23
+      },
+      {
+        "day": 18,
+        "mood": "THRIVING",
+        "supply": 9997777.99,
+        "circulating": 39311.99,
+        "burned": 2222,
+        "rollover": 0,
+        "escrowed": 466,
+        "active": 30
+      },
+      {
+        "day": 19,
+        "mood": "THRIVING",
+        "supply": 9997583.99,
+        "circulating": 38997.99,
+        "burned": 2416,
+        "rollover": 0,
+        "escrowed": 586,
+        "active": 30
+      },
+      {
+        "day": 20,
+        "mood": "THRIVING",
+        "supply": 9997353.99,
+        "circulating": 38759.99,
+        "burned": 2646,
+        "rollover": 0,
+        "escrowed": 594,
+        "active": 29
+      },
+      {
+        "day": 21,
+        "mood": "THRIVING",
+        "supply": 9997123.99,
+        "circulating": 38597.99,
+        "burned": 2876,
+        "rollover": 0,
+        "escrowed": 526,
+        "active": 29
+      },
+      {
+        "day": 22,
+        "mood": "THRIVING",
+        "supply": 9996929.99,
+        "circulating": 38459.99,
+        "burned": 3070,
+        "rollover": 0,
+        "escrowed": 470,
+        "active": 27
+      },
+      {
+        "day": 23,
+        "mood": "THRIVING",
+        "supply": 9996747.99,
+        "circulating": 38217.99,
+        "burned": 3252,
+        "rollover": 0,
+        "escrowed": 530,
+        "active": 23
+      },
+      {
+        "day": 24,
+        "mood": "THRIVING",
+        "supply": 9996529.99,
+        "circulating": 38023.99,
+        "burned": 3470,
+        "rollover": 0,
+        "escrowed": 506,
+        "active": 26
+      },
+      {
+        "day": 25,
+        "mood": "THRIVING",
+        "supply": 9996335.99,
+        "circulating": 37709.99,
+        "burned": 3664,
+        "rollover": 0,
+        "escrowed": 626,
+        "active": 30
+      },
+      {
+        "day": 26,
+        "mood": "THRIVING",
+        "supply": 9996093.99,
+        "circulating": 37591.99,
+        "burned": 3906,
+        "rollover": 0,
+        "escrowed": 502,
+        "active": 27
+      },
+      {
+        "day": 27,
+        "mood": "THRIVING",
+        "supply": 9995899.99,
+        "circulating": 37321.99,
+        "burned": 4100,
+        "rollover": 0,
+        "escrowed": 578,
+        "active": 30
+      },
+      {
+        "day": 28,
+        "mood": "THRIVING",
+        "supply": 9995681.99,
+        "circulating": 37175.99,
+        "burned": 4318,
+        "rollover": 0,
+        "escrowed": 506,
+        "active": 30
+      },
+      {
+        "day": 29,
+        "mood": "THRIVING",
+        "supply": 9995487.99,
+        "circulating": 37013.99,
+        "burned": 4512,
+        "rollover": 0,
+        "escrowed": 474,
+        "active": 28
+      },
+      {
+        "day": 30,
+        "mood": "THRIVING",
+        "supply": 9995293.99,
+        "circulating": 36755.99,
+        "burned": 4706,
+        "rollover": 0,
+        "escrowed": 538,
+        "active": 24
+      },
+      {
+        "day": 31,
+        "mood": "THRIVING",
+        "supply": 9995075.99,
+        "circulating": 36637.99,
+        "burned": 4924,
+        "rollover": 0,
+        "escrowed": 438,
+        "active": 28
+      },
+      {
+        "day": 32,
+        "mood": "THRIVING",
+        "supply": 9994905.99,
+        "circulating": 36391.99,
+        "burned": 5094,
+        "rollover": 0,
+        "escrowed": 514,
+        "active": 28
+      },
+      {
+        "day": 33,
+        "mood": "THRIVING",
+        "supply": 9994711.99,
+        "circulating": 36213.99,
+        "burned": 5288,
+        "rollover": 0,
+        "escrowed": 498,
+        "active": 30
+      },
+      {
+        "day": 34,
+        "mood": "THRIVING",
+        "supply": 9994517.99,
+        "circulating": 36015.99,
+        "burned": 5482,
+        "rollover": 0,
+        "escrowed": 502,
+        "active": 25
+      },
+      {
+        "day": 35,
+        "mood": "THRIVING",
+        "supply": 9994323.99,
+        "circulating": 35845.99,
+        "burned": 5676,
+        "rollover": 0,
+        "escrowed": 478,
+        "active": 25
+      },
+      {
+        "day": 36,
+        "mood": "THRIVING",
+        "supply": 9994129.99,
+        "circulating": 35651.99,
+        "burned": 5870,
+        "rollover": 0,
+        "escrowed": 478,
+        "active": 31
+      },
+      {
+        "day": 37,
+        "mood": "THRIVING",
+        "supply": 9993935.99,
+        "circulating": 35445.99,
+        "burned": 6064,
+        "rollover": 0,
+        "escrowed": 490,
+        "active": 29
+      },
+      {
+        "day": 38,
+        "mood": "THRIVING",
+        "supply": 9993741.99,
+        "circulating": 35295.99,
+        "burned": 6258,
+        "rollover": 0,
+        "escrowed": 446,
+        "active": 23
+      },
+      {
+        "day": 39,
+        "mood": "THRIVING",
+        "supply": 9993559.99,
+        "circulating": 35065.99,
+        "burned": 6440,
+        "rollover": 0,
+        "escrowed": 494,
+        "active": 25
+      },
+      {
+        "day": 40,
+        "mood": "THRIVING",
+        "supply": 9993365.99,
+        "circulating": 34875.99,
+        "burned": 6634,
+        "rollover": 0,
+        "escrowed": 490,
+        "active": 27
+      },
+      {
+        "day": 41,
+        "mood": "THRIVING",
+        "supply": 9993171.99,
+        "circulating": 34653.99,
+        "burned": 6828,
+        "rollover": 0,
+        "escrowed": 518,
+        "active": 28
+      },
+      {
+        "day": 42,
+        "mood": "THRIVING",
+        "supply": 9992965.99,
+        "circulating": 34515.99,
+        "burned": 7034,
+        "rollover": 0,
+        "escrowed": 450,
+        "active": 21
+      },
+      {
+        "day": 43,
+        "mood": "THRIVING",
+        "supply": 9992783.99,
+        "circulating": 34185.99,
+        "burned": 7216,
+        "rollover": 0,
+        "escrowed": 598,
+        "active": 32
+      },
+      {
+        "day": 44,
+        "mood": "THRIVING",
+        "supply": 9992553.99,
+        "circulating": 34039.99,
+        "burned": 7446,
+        "rollover": 0,
+        "escrowed": 514,
+        "active": 25
+      },
+      {
+        "day": 45,
+        "mood": "THRIVING",
+        "supply": 9992359.99,
+        "circulating": 33845.99,
+        "burned": 7640,
+        "rollover": 0,
+        "escrowed": 514,
+        "active": 29
+      },
+      {
+        "day": 46,
+        "mood": "THRIVING",
+        "supply": 9992165.99,
+        "circulating": 33651.99,
+        "burned": 7834,
+        "rollover": 0,
+        "escrowed": 514,
+        "active": 32
+      },
+      {
+        "day": 47,
+        "mood": "THRIVING",
+        "supply": 9991959.99,
+        "circulating": 33489.99,
+        "burned": 8040,
+        "rollover": 0,
+        "escrowed": 470,
+        "active": 28
+      },
+      {
+        "day": 48,
+        "mood": "THRIVING",
+        "supply": 9991777.99,
+        "circulating": 33339.99,
+        "burned": 8222,
+        "rollover": 0,
+        "escrowed": 438,
+        "active": 27
+      },
+      {
+        "day": 49,
+        "mood": "THRIVING",
+        "supply": 9991607.99,
+        "circulating": 33117.99,
+        "burned": 8392,
+        "rollover": 0,
+        "escrowed": 490,
+        "active": 28
+      },
+      {
+        "day": 50,
+        "mood": "THRIVING",
+        "supply": 9991413.99,
+        "circulating": 32955.99,
+        "burned": 8586,
+        "rollover": 0,
+        "escrowed": 458,
+        "active": 25
+      },
+      {
+        "day": 51,
+        "mood": "THRIVING",
+        "supply": 9991231.99,
+        "circulating": 32649.99,
+        "burned": 8768,
+        "rollover": 0,
+        "escrowed": 582,
+        "active": 29
+      },
+      {
+        "day": 52,
+        "mood": "THRIVING",
+        "supply": 9991001.99,
+        "circulating": 32443.99,
+        "burned": 8998,
+        "rollover": 0,
+        "escrowed": 558,
+        "active": 29
+      },
+      {
+        "day": 53,
+        "mood": "THRIVING",
+        "supply": 9990783.99,
+        "circulating": 32337.99,
+        "burned": 9216,
+        "rollover": 0,
+        "escrowed": 446,
+        "active": 24
+      },
+      {
+        "day": 54,
+        "mood": "THRIVING",
+        "supply": 9990613.99,
+        "circulating": 31999.99,
+        "burned": 9386,
+        "rollover": 0,
+        "escrowed": 614,
+        "active": 32
+      },
+      {
+        "day": 55,
+        "mood": "THRIVING",
+        "supply": 9990371.99,
+        "circulating": 31905.99,
+        "burned": 9628,
+        "rollover": 0,
+        "escrowed": 466,
+        "active": 25
+      },
+      {
+        "day": 56,
+        "mood": "THRIVING",
+        "supply": 9990189.99,
+        "circulating": 31623.99,
+        "burned": 9810,
+        "rollover": 0,
+        "escrowed": 566,
+        "active": 28
+      },
+      {
+        "day": 57,
+        "mood": "THRIVING",
+        "supply": 9989971.99,
+        "circulating": 31473.99,
+        "burned": 10028,
+        "rollover": 0,
+        "escrowed": 498,
+        "active": 27
+      },
+      {
+        "day": 58,
+        "mood": "THRIVING",
+        "supply": 9989777.99,
+        "circulating": 31259.99,
+        "burned": 10222,
+        "rollover": 0,
+        "escrowed": 518,
+        "active": 28
+      },
+      {
+        "day": 59,
+        "mood": "THRIVING",
+        "supply": 9989571.99,
+        "circulating": 31041.99,
+        "burned": 10428,
+        "rollover": 0,
+        "escrowed": 530,
+        "active": 28
+      },
+      {
+        "day": 60,
+        "mood": "THRIVING",
+        "supply": 9989365.99,
+        "circulating": 30819.99,
+        "burned": 10634,
+        "rollover": 0,
+        "escrowed": 546,
+        "active": 27
+      }
+    ],
+    "moodDays": {
+      "THRIVING": 55,
+      "STEADY": 4,
+      "HUNGRY": 1,
+      "STARVING": 0
+    },
+    "rejections": {
+      "MIRA is STEADY, not starving": 168,
+      "MIRA is HUNGRY, not starving": 42,
+      "MIRA is THRIVING, not starving": 2310
+    },
+    "settled": 54,
+    "voided": 0,
+    "burned": 10634,
+    "burnedByFailedStakes": 7884,
+    "burnedByProposals": 2750,
+    "circulatingStart": 42000,
+    "circulatingEnd": 30819.99,
+    "rolloverEnd": 0,
+    "starveEvents": 0,
+    "keeperEarned": 0,
+    "honestChange": -5587.17,
+    "honestPlayers": 30,
+    "ring": {
+      "accounts": 12,
+      "change": -5592.82,
+      "winShare": 0.7967213114754098,
+      "entryShare": 0.6720977596741344
+    }
+  }
+]
