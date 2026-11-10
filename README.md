@@ -13,6 +13,7 @@
 |---|---|
 | **Live app** | [mira-memecoin.vercel.app](https://mira-memecoin.vercel.app) (reads the testnet contract live) |
 | **Contract (testnet)** | [`mira-memecoin.testnet`](https://testnet.nearblocks.io/address/mira-memecoin.testnet) |
+| **Hardening** | Config locked and **0 access keys** on the contract: [how to check](#7-token-and-trust-model) |
 | **Owner / treasury** | [`mira-treasury.testnet`](https://testnet.nearblocks.io/address/mira-treasury.testnet) |
 | **Token** | NEP-141, symbol `MIRA`, 18 decimals, 10,000,000 minted once, never again |
 | **Source** | this repository (contract, web app, scripts, CI) |
@@ -91,6 +92,28 @@ You need a testnet account with a little testnet NEAR for gas. The contract pays
 
 If the mascot looks starved, that is the mechanic, not a fault: an epoch on the testnet deployment is 15 minutes, and an epoch with no activity is STARVING. Any action wakes it. The quests were seeded by `scripts/seed-judging.mjs` with the demo accounts, and their entries say so.
 
+### For judges
+
+Where each judging criterion is answered, with the weak spots stated.
+
+| Criterion | Where | The honest caveat |
+|---|---|---|
+| Technical implementation | The whole game is in the contract, not a server: [`contract/src/core`](contract/src/core) (rules) behind [`contract/src/contract.js`](contract/src/contract.js) (NEP-141 and methods). 63 unit tests and 6 sandbox tests on the real wasm ([section 10](#10-testing-and-ci)), an escrow-conservation test after every settlement path, and CI that builds the wasm and commits the tested binary. The contract has 0 access keys and a locked config ([section 7](#7-token-and-trust-model)). | It is JavaScript on `near-sdk-js`, which is unmaintained and uses more gas than Rust ([section 14](#14-known-limitations)). The rules are isolated in `src/core` so they can be ported. |
+| Design | A page whose mascot's face is the contract's mood, with a heartbeat chart, per-phase quest actions and a live feed. Every number is read from the chain. | A transaction signed through a wallet popup has not been exercised by the author ([section 3](#3-what-is-real-and-what-is-not)). |
+| Impact | A memecoin whose supply responds to community activity, and a [60-day simulation](#6-sixty-days-of-simulation) of how, including where it fails. | The same simulation shows players end up poorer in every scenario, and a quiet coin parks tokens instead of burning them. MIRA is a sink, not an earner. |
+| Originality | Sealed-vote quests combined with a mood-dependent burn split and a starvation tax on idle holders. | I did not do a systematic prior-art search, and other entries in this track also use burns and rules in the contract. |
+| Sustainability | Locked config, no keys, anyone can settle a quest or run the starvation keeper. | Nothing runs the keepers automatically yet, and a frozen instance cannot be patched ([section 14](#14-known-limitations)). |
+
+**Against the track's example prompt.** The track's example is a daily check-in streak coin. MIRA is a different mechanic (quests with sealed votes), so it does not implement that example. It answers the example's requirements like this:
+
+| Requirement | Status |
+|---|---|
+| An NEP-141 token with the mechanic in the contract | Yes. |
+| Parameters set at launch, readable by anyone, no admin key able to change them | Mostly. `get_config` is public, the config is locked and the contract has 0 keys. The splits are constants in the code. The owner can still change exemptions and the faucet switch, and the demo values were frozen as they were on 2026-11-10. |
+| Sybil resistance good enough for a demo, limits written plainly | Partly. Stakes make sybil voting expensive, and [section 14](#14-known-limitations) and the simulation state the limits. The demo faucet gives every account free MIRA, so on testnet the attack is free. |
+| A page with the current state and a log of every mint and burn | Yes: the mood, pulse, supply, burned total and a live feed of every burn, payout and tax. There is no minting, so the log has no mints. |
+| Simulate first, then pick the parameters | Yes: [60 days under four communities](#6-sixty-days-of-simulation) and a [parameter sweep](#why-these-defaults). |
+
 ---
 
 ## 3. What is real and what is not
@@ -106,7 +129,7 @@ The README is written so it can be checked against the code.
 | The web app reads live data from the contract | **Real.** One `get_dashboard` view call every 5 s over plain JSON-RPC, with exponential backoff if the RPC throttles. |
 | The web app can sign transactions with a wallet | **Partly verified.** In a real Chrome, the production build opens the NEAR Connector wallet picker with testnet wallets and no console errors. A transaction signed through a wallet popup has **not** been exercised by the author; every contract call has been exercised from scripts with keypairs. A wallet can resolve with a failed outcome instead of rejecting, so the app reads the outcome and shows the contract's panic message rather than a false "confirmed". |
 | The supply behaves as described over 60 days | **Simulated, not observed.** The simulation runs the contract's real rule code with random players ([section 6](#6-sixty-days-of-simulation)). The live testnet has had about a day of demo play. |
-| The owner can lock the tunable config for good | **Implemented and tested** (`lock_config`, unit and sandbox tests). The testnet deployment is **not locked yet**: see [section 7](#7-token-and-trust-model). |
+| The config is locked and the contract has no keys | **Done on testnet and checkable.** `get_overview.config_locked` is `true` and the account has 0 access keys ([section 7](#7-token-and-trust-model) has the one-line check). `lock_config` has unit and sandbox tests. |
 | The faucet (`claim`) | **Demo only.** It pays 1,000 test MIRA once per account from the owner's balance. Switch it off with `set_faucet`. |
 | Mainnet | **Not deployed.** The contract is unaudited ([section 14](#14-known-limitations)). |
 
@@ -252,6 +275,26 @@ Contract defaults, not the testnet's demo clocks: 1-day epochs, target 20 beats.
 * **A quiet coin is taxed, not burned.** With nobody left to propose a quest, the starvation tax moved about 12,200 MIRA off the players (41% of what they held, in 60 days): 20% to the keeper and 80% into a quest pool that sits unspent. **This is a real weakness of the design**, not a feature. It is on the [roadmap](#15-roadmap).
 * **A sybil ring controls outcomes but loses money, at these prize sizes.** Over 8 seeds the 12 colluders won 79 to 86% of all wins from 67% of the entries (a real edge, not a takeover), and still lost 5,100 to 5,600 MIRA, because every losing entry forfeits its stake. Prize pools here are small (a proposer's 10 MIRA seed plus rolled-over stakes). With a large prize the same ring could come out ahead, so this is a cost estimate, not a defence. Part of the ring's edge is probably scar weight (losing builds vote weight up to 4x); the simulation did not isolate that.
 
+### Why these defaults
+
+`npm run sim:sweep` re-runs three communities (thriving, fading, quiet) under nine settings of the two knobs that decide how the coin feels: the beat target and the starvation tax. Same seed, same 30 players, 60 days.
+
+| Beat target | Tax | Thriving: burned (days thriving) | Fading: burned (days starving) | Quiet: pool parked / honest net each |
+|---|---|---|---|---|
+| 10 | 0.5% | 6,944 (59) | 3,982 (3) | 5,449 / -227 |
+| 10 | 1% | 6,944 (59) | 3,982 (3) | 9,678 / -403 |
+| 10 | 2% | 6,944 (59) | 3,982 (3) | 15,491 / -646 |
+| **20** | 0.5% | 6,944 (57) | 3,922 (14) | 5,517 / -230 |
+| **20** | **1%** | 6,944 (57) | 3,922 (14) | 9,783 / -408 |
+| **20** | 2% | 6,944 (57) | 3,922 (14) | 15,616 / -651 |
+| 40 | 0.5% | 6,584 (23) | 3,489 (19) | 5,517 / -230 |
+| 40 | 1% | 6,584 (23) | 3,489 (19) | 9,783 / -408 |
+| 40 | 2% | 6,584 (23) | 3,489 (19) | 15,616 / -651 |
+
+* **The beat target decides whether mood means anything.** At 10, this community is "thriving" 59 days of 60 and the fading one starves for only 3, so the mood never bites. At 40, even the thriving community is thriving only 23 days. The default of 20 (about two thirds of a player per day for 30 players) separates the scenarios: 57 thriving days against 14 starving days in the fading run. The target has to scale with the community, which is why it is a launch parameter.
+* **The tax only costs idle holders.** It does not change what thriving or fading communities burn, and doubling it doubles what the quiet community loses and parks. The default of 1% is a compromise, and 0.5% would hurt a quiet community half as much. Because it fixes nothing by itself, the real fix is the unspent-pool problem above.
+* **The testnet deployment uses different values** (a target of 10 and 15-minute epochs) because only a handful of demo accounts play there. The sweep is about the contract's defaults.
+
 **Limits of the simulation.** Players are random and do not adapt, there is no market or price, one keeper bot is always on, and gas is not modeled. The numbers show how the rules respond to activity, not what a real community would do. Seed 7 is shown; the other seeds I ran agree within a few percent (thriving burned 6,800 to 7,112, quiet pool 9,691 to 9,920).
 
 ---
@@ -273,9 +316,14 @@ What the **owner** can and cannot do:
 | | Change winner rules, or settle a quest differently than the code says |
 | | **After `lock_config`:** change any tunable value again. Nobody can, and there is no unlock. |
 
-**Locking.** `lock_config` makes the clocks and thresholds permanent and emits a `CONFIG_LOCKED` event carrying the final values; `get_overview.config_locked` and the web page show the state. A contract can also be launched already locked (`init {…, lock_config: true}`). Locking does not touch `set_exempt` or `set_faucet`: exemptions are needed for DEX pools and the faucet is a demo switch, and neither can change a rule or move escrow. A launch with no admin tuning at all would call `lock_config` in the same transaction batch as `init`.
+**Locking.** `lock_config` makes the clocks and thresholds permanent and emits a `CONFIG_LOCKED` event carrying the final values; `get_overview.config_locked` and the web page show the state. A contract can also be launched already locked (`init {…, lock_config: true}`). Locking does not touch `set_exempt` or `set_faucet`: exemptions are needed for DEX pools and the faucet is a demo switch, and neither can change a rule or move escrow.
 
-**The testnet deployment is not locked yet.** It runs demo clocks (15-minute epochs) that the owner may still need to adjust while the demo is live, so its `config_locked` is `false`. The README does not claim "no admin key" for it; it claims the table above.
+**The testnet deployment is locked and keyless** (done on 2026-11-10 with `scripts/make-keyless.mjs`, which refuses to delete the key unless the lock is proven first):
+
+* **Config locked.** `config_locked` is `true`; the `CONFIG_LOCKED` event is in the contract's feed and `set_config` is rejected, even for the owner. The demo values it froze: 15-minute epochs, target 10 beats, 20-second minimum phases, a gm streak of 1 to propose.
+* **0 access keys.** `mira-memecoin.testnet` has no keys, so nobody (including the author) can sign as it, replace its code, or upgrade it. Check it yourself: `curl -s https://rpc.testnet.fastnear.com -H 'content-type: application/json' -d '{"jsonrpc":"2.0","id":1,"method":"query","params":{"request_type":"view_access_key_list","finality":"final","account_id":"mira-memecoin.testnet"}}'` returns `"keys":[]`. The web page reads the same count live (section 7 of the page, "No keys").
+* **What the owner (`mira-treasury.testnet`) can still do:** `set_exempt`, `set_faucet`, and move the treasury's tokens like any holder. The treasury holds the unissued supply and also funds the faucet, so it can drain the faucet. None of that changes a rule or touches escrow.
+* **The price of being keyless.** A bug found now cannot be fixed on this instance. A fix means a new instance with a new account name.
 
 Note that the treasury account *does* hold the unissued supply, and the owner can move it like any holder. A production launch would put the treasury under a DAO or multisig.
 
@@ -404,6 +452,7 @@ npm run build && npm run lint
 # unit tests for the game rules (any OS), and the 60-day simulation
 cd contract && npm install --ignore-scripts && npm test
 npm run sim            # rewrites sim/results.json and ../public/simulation.svg
+npm run sim:sweep      # parameter sweep: beat target x starvation tax
 ```
 
 `npm install` inside `contract/` runs a `near-sdk-js` post-install that fails on Windows; use `--ignore-scripts` there. Building the wasm and running sandbox tests needs Linux (or WSL), which is what CI does:
@@ -454,6 +503,7 @@ Scripts (in `scripts/`, own `package.json` with `near-api-js`):
 | `create-testnet-account.mjs` | Create a faucet-funded testnet account. Keys are written to `~/.near-credentials/`, never to the repo. |
 | `deploy.mjs` | Check storage cost, deploy `contract/wasm/mira.wasm`, initialise, verify. |
 | `seed.mjs` | Play a full quest with five accounts, then leave a second quest open. |
+| `make-keyless.mjs` | One-way hardening, needs `--yes`: top up storage, `lock_config`, prove `set_config` is rejected, then delete the contract's only access key. Already run on testnet. |
 | `seed-judging.mjs` | Leave three quests parked in the enter, vote and settle phases for the judging window (entries say they are seeded demo content). |
 
 ---
@@ -469,7 +519,7 @@ Hackathon software, stated plainly:
 * **Free actions cost the contract storage.** The contract pays storage for stats and entries, so a spammer could burn its storage balance. A production version needs a storage deposit or a fee.
 * **`near-sdk-js` is unmaintained** (last release June 2024) and NEAR's docs call `near-sdk-rs` the only official SDK. JS contracts also use more gas than Rust. The rules are isolated in `src/core` precisely so they can be ported.
 * **A transaction signed through a wallet popup has not been exercised** by the author (see [section 3](#3-what-is-real-and-what-is-not)). The wallet picker opens in Chrome, and reads and every contract call from scripts are verified.
-* **The testnet config is not locked** (`lock_config` exists, but the demo clocks may still need tuning), so on testnet the owner can still change the tunable values. See [section 7](#7-token-and-trust-model).
+* **The testnet instance is frozen.** Its config is locked and it has no access keys, so a bug cannot be patched there; the demo clocks (15-minute epochs) are permanent, and a fix needs a new instance. The owner can still change exemptions and the faucet switch, and it holds the treasury.
 * **A quiet coin parks tokens instead of burning them.** When nobody is left to propose a quest, the starvation tax fills a quest pool that nothing spends (about 9,800 MIRA after 60 quiet days in the simulation), and the keeper takes 20%.
 * **`ft_transfer_call` is tested against a failing receiver**, not a real DEX receiver.
 * **The starvation tax is a real cost to idle holders**, by design. Exempt DEX pools and treasuries with `set_exempt`.
