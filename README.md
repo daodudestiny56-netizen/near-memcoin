@@ -511,6 +511,15 @@ Hackathon software, stated plainly:
 └── README.md
 ```
 
+### Libraries, licence and provenance
+
+* **Licence:** [MIT](LICENSE).
+* **Written during the hackathon.** The first commit in this repository is dated 2026-11-09; `git log` shows the whole history.
+* **Contract:** `near-sdk-js` 2.0.0 (NEAR's JS SDK, used for the wasm wrapper only); tests use Node's built-in runner, `ava` and `near-workspaces`.
+* **Web app:** React 19, Vite, TypeScript, `oxlint`, and `@hot-labs/near-connect` for wallet connection. Font: Bricolage Grotesque.
+* **Scripts:** `near-api-js` (deploy and seed), `playwright-core` (demo recorder only).
+* **Not used in the contract:** no third-party game or token template. The game rules in `contract/src/core` and the simulation in `contract/sim` are original to this repository.
+
 ---
 
 ## 17. Related project
